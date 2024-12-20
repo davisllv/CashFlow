@@ -1,36 +1,27 @@
 ﻿using CashFlow.Communication.Request;
 using CashFlow.Communication.Responses;
-using CashFlow.Domain.Repositories.Expenses;
-using CashFlow.Domain.Entities;
 using CashFlow.Exception.ExceptionBase;
+using CashFlow.Infrastructure.DataAccess;
 using FluentValidation.Results;
-using CashFlow.Domain.Enums;
 
 namespace CashFlow.Application.UseCase.Expenses.Register;
 
-public class RegisterExpenseUseCase : IRegisterExpenseUseCase
+public class RegisterExpenseUseCase
 {
-    private readonly IExpensesRepository _repository;
-    public RegisterExpenseUseCase(IExpensesRepository repository)
-    {
-        _repository = repository;
-    }
-
     public ResponseRegisterExpenseJson Execute(RequestRegisterExpenseJson request)
     {
         // To do - Validation
         Validate(request);
 
-        Expense expense = new Expense
+        var dbContext = new CashFlowDbContext();
+
+        var entity = new Domain.Entities.Expenses
         {
             Amount = request.Amount,
             Date = request.Date,
             Description = request.Description,
             Title = request.Title,
-            PaymentType = (PaymentType)request.PaymentType,
         };
-
-        _repository.Add(expense);
 
         return new ResponseRegisterExpenseJson();
     }

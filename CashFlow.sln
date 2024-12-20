@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Exception", "CashF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Infrastructure", "CashFlow.Infraestructure\CashFlow.Infrastructure.csproj", "{29E74175-828F-4CB2-B8A5-04D2397B4710}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Test", "test\Validators.Test\Validators.Test.csproj", "{FFFDE05A-CEC4-475B-B107-C550B8A26F88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validators.Test", "test\Validators.Test\Validators.Test.csproj", "{FFFDE05A-CEC4-475B-B107-C550B8A26F88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommomTestUtilities", "CommomTestUtilities\CommomTestUtilities.csproj", "{CF5D0577-6112-470A-A255-405FAAB1FBEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{FFFDE05A-CEC4-475B-B107-C550B8A26F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFFDE05A-CEC4-475B-B107-C550B8A26F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFFDE05A-CEC4-475B-B107-C550B8A26F88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF5D0577-6112-470A-A255-405FAAB1FBEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5D0577-6112-470A-A255-405FAAB1FBEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF5D0577-6112-470A-A255-405FAAB1FBEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF5D0577-6112-470A-A255-405FAAB1FBEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{4006FC25-C010-48A2-8515-7CCD7594CF9F} = {6546E6ED-2736-410D-B4C0-29E1DC623190}
 		{29E74175-828F-4CB2-B8A5-04D2397B4710} = {6546E6ED-2736-410D-B4C0-29E1DC623190}
 		{FFFDE05A-CEC4-475B-B107-C550B8A26F88} = {15D30E3C-3B26-479D-9D9C-892B75F164A6}
+		{CF5D0577-6112-470A-A255-405FAAB1FBEB} = {15D30E3C-3B26-479D-9D9C-892B75F164A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A530ED1-1AB4-4084-9EAB-29F287C094A3}
