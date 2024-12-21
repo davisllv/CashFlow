@@ -1,5 +1,5 @@
-﻿using CashFlow.Application.UseCase.Expenses.Register;
-using CashFlow.Domain.Repositories.Expenses;
+﻿using CashFlow.Application.AutoMapper;
+using CashFlow.Application.UseCase.Expenses.Register;
 
 namespace CashFlow.Infrastructure;
 
@@ -8,7 +8,18 @@ public static class DependencyInjectionExtension
 {
     public static void AddApplication(this IServiceCollection services)
     {
+        AddAutoMapper(services);
+        AddUseCase(services);
 
+    }
+
+    public static void AddAutoMapper(IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(AutoMapping));
+    }
+
+    public static void AddUseCase(IServiceCollection services)
+    {
         services.AddScoped<IRegisterExpenseUseCase, RegisterExpenseUseCase>();
     }
 }

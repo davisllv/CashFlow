@@ -1,6 +1,5 @@
 using CashFlow.Api.Filters;
 using CashFlow.Api.Middleware;
-using CashFlow.Domain.Repositories.Expenses;
 using CashFlow.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +15,8 @@ builder.Services.AddMvc(option => option.Filters.Add(typeof(ExceptionFilter))); 
 
 // DependencyInjectionExtension.AddInfrastructure(builder.Services); A forma a baixo é uma forma de extender as funcionalidades do IServiceCollection
  
-builder.Services.AddInfrastructure(); // Fica mais fácil de gerir a injeção de dependência.
-builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration); // Fica mais fácil de gerir a injeção de dependência, porque eu apenas adiciono os repositórios dentro desse método.
+builder.Services.AddApplication(); 
 
 var app = builder.Build();
 

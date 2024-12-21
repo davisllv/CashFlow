@@ -4,12 +4,14 @@ namespace CashFlow.Infrastructure.DataAccess.Respositories;
 
 internal class ExpensesRepository : IExpensesRepository
 {
-    public void Add(Expense expense)
+    private readonly CashFlowDbContext _dbContext;
+    public ExpensesRepository(CashFlowDbContext dbContext)
     {
-        var dbContext = new CashFlowDbContext();
-
-        dbContext.Expenses.Add(expense);
-
-        dbContext.SaveChanges();
+        _dbContext = dbContext;
+    }
+    public async Task Add(Expense expense)
+    {
+        _dbContext.Expenses.Add(expense);
+        // Não colocar o commit no repositório e sim na regra de negócio.
     }
 }
