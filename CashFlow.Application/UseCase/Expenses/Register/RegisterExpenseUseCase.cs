@@ -24,7 +24,7 @@ public class RegisterExpenseUseCase : IRegisterExpenseUseCase
 
     public async Task<ResponseRegisterExpenseJson> Execute(RequestRegisterExpenseJson request)
     {
-        // To do - Validation
+        // To do - Validation - Verified Commit
         Validate(request);
 
         Expense expense = _mapper.Map<Expense>(request);
