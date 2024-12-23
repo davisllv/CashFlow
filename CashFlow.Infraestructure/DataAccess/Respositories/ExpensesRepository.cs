@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CashFlow.Infrastructure.DataAccess.Respositories;
 
-internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnlyRepository
+internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnlyRepository, IExpenseUpdateOnlyRepository
 {
     private readonly CashFlowDbContext _dbContext;
     public ExpensesRepository(CashFlowDbContext dbContext)
@@ -33,12 +33,23 @@ internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnl
 
     public async Task<List<Expense>> GetAll()
     {
-        // AsNoTracking - Não é preciso salvar cache de nada, visto que não vai ser feito nenhuma alteração. Torna as consultas mais rápidas.
+        // AsNoTracking - Não é preciso salvar cache de nada, visto que não vai ser feito nenhuma alteração. Torna as consultas mais rápidas. Quando for feito uma alteração no banco não deve ser feito assim.
         return await _dbContext.Expenses.AsNoTracking().ToListAsync();
     }
 
-    public async Task<Expense?> GetById(long id)
+    async Task<Expense?> IExpenseReadOnlyRepository.GetById(long id)
     {
         return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
+    }
+
+    // Essa é uma forma de diferenciar quais os métodos estão sendo chamados de acordo com a interface
+    async Task<Expense?> IExpenseUpdateOnlyRepository.GetById(long id)
+    {
+        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
+    }
+
+    public void Update(Expense expense)
+    {
+        _dbContext.Expenses.Update(expense); // Update é void porque ele não é async
     }
 }

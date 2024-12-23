@@ -23,6 +23,6 @@ public class AutoMapping : Profile
     private void RequestToEntity()
     {
         // A origem, Destino
-        CreateMap<RequestRegisterExpenseJson, Expense>();
+        CreateMap<RequestExpenseJson, Expense>();
     }
 }

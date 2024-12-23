@@ -4,7 +4,6 @@ using CashFlow.Domain.Repositories.Expenses;
 using CashFlow.Domain.Entities;
 using CashFlow.Exception.ExceptionBase;
 using FluentValidation.Results;
-using CashFlow.Domain.Enums;
 using CashFlow.Domain.Repositories;
 using AutoMapper;
 
@@ -22,7 +21,7 @@ public class RegisterExpenseUseCase : IRegisterExpenseUseCase
         _mapper = mapper;
     }
 
-    public async Task<ResponseRegisterExpenseJson> Execute(RequestRegisterExpenseJson request)
+    public async Task<ResponseRegisterExpenseJson> Execute(RequestExpenseJson request)
     {
         // To do - Validation - Verified Commit
         Validate(request);
@@ -36,9 +35,9 @@ public class RegisterExpenseUseCase : IRegisterExpenseUseCase
         return _mapper.Map<ResponseRegisterExpenseJson>(expense);
     }
 
-    private void Validate(RequestRegisterExpenseJson request)
+    private void Validate(RequestExpenseJson request)
     {
-        ValidationResult validation = new RegisterExpenseValidator().Validate(request);
+        ValidationResult validation = new ExpenseValidator().Validate(request);
         if (!validation.IsValid)
         {
             var errorMessages = validation.Errors.Select(p => p.ErrorMessage).ToList();
