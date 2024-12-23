@@ -22,21 +22,9 @@ public class ExceptionFilter : IExceptionFilter
 
     private void HandleProjectException(ExceptionContext context)
     {
-        if(context.Exception is ErrorOnValidationException errorOnValidation)
-        {
-             // Ou  context.Exception as ErrorOnValidationException - Dessa forma se o ex não for o valor não ocorrerá o erro, irá retornar nulo - only to see the commit
-            context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Result = new BadRequestObjectResult(new ResponseErrorJson(errorOnValidation.Errors));
-        }else if(context.Exception is NotFoundException notFoundException)
-        {
-            context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-            context.Result = new BadRequestObjectResult(new ResponseErrorJson(notFoundException.Message));
-        }
-        else
-        {
-            context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Result = new BadRequestObjectResult(new ResponseErrorJson(context.Exception.Message));
-        }
+        var cashFlowException = context.Exception as CashFlowException;
+        context.HttpContext.Response.StatusCode = cashFlowException!.StatusCode;
+        context.Result = new ObjectResult(new ResponseErrorJson(cashFlowException.GetErrors()));
     }
 
     private void ThrowUnkowError(ExceptionContext context)
