@@ -24,7 +24,7 @@ public class ExceptionFilter : IExceptionFilter
     {
         if(context.Exception is ErrorOnValidationException errorOnValidation)
         {
-             // Ou  context.Exception as ErrorOnValidationException - Dessa forma se o ex não for o valor não ocorrerá o erro, irá retornar nulo
+             // Ou  context.Exception as ErrorOnValidationException - Dessa forma se o ex não for o valor não ocorrerá o erro, irá retornar nulo - only to see the commit
             context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
             context.Result = new BadRequestObjectResult(new ResponseErrorJson(errorOnValidation.Errors));
         }else if(context.Exception is NotFoundException notFoundException)
