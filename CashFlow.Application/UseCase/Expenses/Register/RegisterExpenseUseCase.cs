@@ -12,10 +12,10 @@ namespace CashFlow.Application.UseCase.Expenses.Register;
 
 public class RegisterExpenseUseCase : IRegisterExpenseUseCase
 {
-    private readonly IExpensesRepository _repository;
+    private readonly IExpenseWriteOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public RegisterExpenseUseCase(IExpensesRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    public RegisterExpenseUseCase(IExpenseWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
