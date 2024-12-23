@@ -22,12 +22,20 @@ public class ExceptionFilter : IExceptionFilter
 
     private void HandleProjectException(ExceptionContext context)
     {
-        if(context.Exception is ErrorOnValidationException)
+        if(context.Exception is ErrorOnValidationException errorOnValidation)
         {
-            ErrorOnValidationException ex = (ErrorOnValidationException)context.Exception; // Ou  context.Exception as ErrorOnValidationException - Dessa forma se o ex não for o valor não ocorrerá o erro, irá retornar nulo
-            var errorResponse = new ResponseErrorJson(ex.Errors);
+             // Ou  context.Exception as ErrorOnValidationException - Dessa forma se o ex não for o valor não ocorrerá o erro, irá retornar nulo
             context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Result = new BadRequestObjectResult(errorResponse);
+            context.Result = new BadRequestObjectResult(new ResponseErrorJson(errorOnValidation.Errors));
+        }else if(context.Exception is NotFoundException notFoundException)
+        {
+            context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            context.Result = new BadRequestObjectResult(new ResponseErrorJson(notFoundException.Message));
+        }
+        else
+        {
+            context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            context.Result = new BadRequestObjectResult(new ResponseErrorJson(context.Exception.Message));
         }
     }
 

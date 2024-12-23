@@ -70,6 +70,15 @@ namespace CashFlow.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Expense not found.
+        /// </summary>
+        public static string EXPENSE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("EXPENSE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Expenses cannot be for the future.
         /// </summary>
         public static string EXPENSES_CANNOT_FOR_THE_FUTERE {
@@ -90,9 +99,9 @@ namespace CashFlow.Exception {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a The title is required.
         /// </summary>
-        public static string TITLE_REQUERID {
+        public static string TITLE_REQUIRED {
             get {
-                return ResourceManager.GetString("TITLE_REQUERID", resourceCulture);
+                return ResourceManager.GetString("TITLE_REQUIRED", resourceCulture);
             }
         }
         

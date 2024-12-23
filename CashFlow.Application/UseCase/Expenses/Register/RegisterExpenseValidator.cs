@@ -11,7 +11,7 @@ public class RegisterExpenseValidator : AbstractValidator<RequestRegisterExpense
     // O arquivo de resource default ele vai retonar caso não seja encontrado um outro com a tag específico. O arquivo sem tag será definido o arquivo - idioma, nesse caso - padrão.
     public RegisterExpenseValidator()
     {
-        RuleFor(expense => expense.Title).NotEmpty().WithMessage(ResourceErrorMessages.TITLE_REQUERID);
+        RuleFor(expense => expense.Title).NotEmpty().WithMessage(ResourceErrorMessages.TITLE_REQUIRED);
         RuleFor(expense => expense.Amount).GreaterThan(0).WithMessage(ResourceErrorMessages.AMOUNT_MUST_BE_GREATHER_THAN_ZERO);
         RuleFor(expense => expense.Date).LessThanOrEqualTo(DateTime.UtcNow).WithMessage(ResourceErrorMessages.EXPENSES_CANNOT_FOR_THE_FUTERE);
         RuleFor(expense => expense.PaymentType).IsInEnum().WithMessage(ResourceErrorMessages.PAYMENT_TYPE_INVALID);
