@@ -17,6 +17,20 @@ internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnl
         // Não colocar o commit no repositório e sim na regra de negócio.
     }
 
+    public async Task<bool> Delete(long id)
+    {
+        var response = await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
+
+        if(response is null)
+        {
+            return false;
+        }
+
+        _dbContext.Expenses.Remove(response);
+
+        return true;
+    }
+
     public async Task<List<Expense>> GetAll()
     {
         // AsNoTracking - Não é preciso salvar cache de nada, visto que não vai ser feito nenhuma alteração. Torna as consultas mais rápidas.
