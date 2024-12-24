@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="Reports\ResourceReportGenerationMessages.pt-PT.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ResourceReportGenerationMessages.pt-PT.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Reports\ResourceReportGenerationMessages.pt-BR.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ResourceReportGenerationMessages.pt-BR.resx</DependentUpon>
-    </Compile>
     <Compile Update="Reports\ResourceReportGenerationMessages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -25,14 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Reports\ResourceReportGenerationMessages.pt-PT.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResourceReportGenerationMessages.pt-PT.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Reports\ResourceReportGenerationMessages.pt-BR.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResourceReportGenerationMessages.pt-BR.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Reports\ResourceReportGenerationMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceReportGenerationMessages.Designer.cs</LastGenOutput>

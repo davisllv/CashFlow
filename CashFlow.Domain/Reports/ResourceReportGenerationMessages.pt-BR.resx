@@ -127,7 +127,7 @@
     <value>Descrição</value>
   </data>
   <data name="PAYMENT_TYPE" xml:space="preserve">
-    <value>Tipo do Pagamento</value>
+    <value>Tipo de Pagamento</value>
   </data>
   <data name="TITLE" xml:space="preserve">
     <value>Título</value>

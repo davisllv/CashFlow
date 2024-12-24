@@ -8,7 +8,7 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
 {
 
 
-    public Task<byte[]> Execute(DateOnly month)
+    public async Task<byte[]> Execute(DateOnly month)
     {
         var workbook = new XLWorkbook();
 
@@ -19,6 +19,12 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
         var worksheet = workbook.Worksheets.Add(month.ToString("Y"));
 
         InsertHeader(worksheet);
+
+        var file = new MemoryStream(); // Fornte desses dados é da memória.
+
+        workbook.SaveAs(file);
+
+        return file.ToArray();
     }
 
     private void InsertHeader(IXLWorksheet worksheet)
