@@ -1,15 +1,22 @@
 ﻿
 using CashFlow.Domain.Reports;
+using CashFlow.Domain.Repositories.Expenses;
 using ClosedXML.Excel;
 
 namespace CashFlow.Application.UseCase.Expenses.Reports;
 
 public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUseCase
 {
-
+    private readonly IExpenseReadOnlyRepository _repository;
+    public GenerateExpensesReportExcelUseCase(IExpenseReadOnlyRepository repository)
+    {
+        _repository = repository;
+    }
 
     public async Task<byte[]> Execute(DateOnly month)
     {
+
+        var expenses = _repository.FilterByMonth(month);
         var workbook = new XLWorkbook();
 
         workbook.Author = "Davi da Silva dos Santos";
