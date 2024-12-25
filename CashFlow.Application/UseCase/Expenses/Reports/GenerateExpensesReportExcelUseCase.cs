@@ -15,8 +15,11 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
 
     public async Task<byte[]> Execute(DateOnly month)
     {
+        var expenses = await _repository.FilterByMonth(month);
+        // Caso não tenha expenses, não faz sentido retornar o um excel com apenas cabeçalho.
+        if (expenses.Count == 0)
+            return [];
 
-        var expenses = _repository.FilterByMonth(month);
         var workbook = new XLWorkbook();
 
         workbook.Author = "Davi da Silva dos Santos";

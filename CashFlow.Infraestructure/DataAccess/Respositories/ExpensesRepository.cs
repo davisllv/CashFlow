@@ -56,6 +56,7 @@ internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnl
 
     public async Task<List<Expense>> FilterByMonth(DateOnly date)
     {
+        // Filtros são feitos dentro do repositório.
         var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
 
         var finalDate = new DateTime(year: date.Year, month: date.Month, day: DateTime.DaysInMonth(date.Year, date.Month), hour: 23, minute: 59, second: 59).Date;
