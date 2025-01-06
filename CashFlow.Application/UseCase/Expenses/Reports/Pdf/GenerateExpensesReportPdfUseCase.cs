@@ -1,4 +1,6 @@
-﻿using CashFlow.Domain.Repositories.Expenses;
+﻿using CashFlow.Application.UseCase.Expenses.Reports.Pdf.Fonts;
+using CashFlow.Domain.Repositories.Expenses;
+using PdfSharp.Fonts;
 
 namespace CashFlow.Application.UseCase.Expenses.Reports.Pdf;
 
@@ -10,6 +12,8 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
     public GenerateExpensesReportPdfUseCase(IExpenseReadOnlyRepository repository)
     {
         _repository = repository;
+        // Forma de resolver o tipo de font do pdf, ao colocar dentro do useCase ele faz com que as fontes são utilizados apenas nesse relatório
+        GlobalFontSettings.FontResolver = new ExpensesReportFontResolver();
     }
 
     public async Task<byte[]> Execute(DateOnly month)
