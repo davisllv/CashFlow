@@ -1,10 +1,10 @@
-﻿
-using CashFlow.Domain.Enums;
+﻿using CashFlow.Domain.Enums;
 using CashFlow.Domain.Reports;
 using CashFlow.Domain.Repositories.Expenses;
 using ClosedXML.Excel;
+// Using para importar
 
-namespace CashFlow.Application.UseCase.Expenses.Reports;
+namespace CashFlow.Application.UseCase.Expenses.Reports.Excel;
 
 public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUseCase
 {
@@ -22,8 +22,8 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
         // Caso não tenha expenses, não faz sentido retornar o um excel com apenas cabeçalho.
         if (expenses.Count == 0)
             return [];
-
-        var workbook = new XLWorkbook();
+        // Using obriga a utilização de classes disposable, garantir que ao final do escopo será liberado a utilização dos recursos
+        using var workbook = new XLWorkbook();
 
         workbook.Author = "Davi da Silva dos Santos";
         workbook.Style.Font.FontSize = 12;
@@ -34,7 +34,7 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
         InsertHeader(worksheet);
 
         var raw = 2;
-        foreach(var expense in expenses)
+        foreach (var expense in expenses)
         {
             worksheet.Cell($"A{raw}").Value = expense.Title;
             worksheet.Cell($"B{raw}").Value = expense.Date;
@@ -52,6 +52,9 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
         var file = new MemoryStream(); // Fornte desses dados é da memória.
 
         workbook.SaveAs(file);
+
+
+        // workbook.Dispose(); Forma de liberar os recursos.
 
         return file.ToArray();
     }
