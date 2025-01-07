@@ -16,12 +16,12 @@ public class ExpensesReportFontResolver : IFontResolver
         var data = new byte[length];
 
         stream.Read(buffer: data, offset: 0, count: length);
-        throw new NotImplementedException();
+
+        return data;
     }
 
     public FontResolverInfo? ResolveTypeface(string familyName, bool bold, bool italic)
     {
-
         return new FontResolverInfo(familyName);
     }
 
@@ -30,6 +30,6 @@ public class ExpensesReportFontResolver : IFontResolver
         // DLL do projeto de application para ler as fonts
         var assembly = Assembly.GetExecutingAssembly();
 
-        return assembly.GetManifestResourceStream($"CashFlow.Application.UseCase.Expenses.Reports.Pdf.Fonts.${faceName}.ttf");
+        return assembly.GetManifestResourceStream($"CashFlow.Application.UseCase.Expenses.Reports.Pdf.Fonts.{faceName}.ttf");
     }
 }
