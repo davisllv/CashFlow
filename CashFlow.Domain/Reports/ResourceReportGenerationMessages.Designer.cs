@@ -149,5 +149,14 @@ namespace CashFlow.Domain.Reports {
                 return ResourceManager.GetString("TITLE", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Total spent in {0}.
+        /// </summary>
+        public static string TOTAL_SPENT_IN {
+            get {
+                return ResourceManager.GetString("TOTAL_SPENT_IN", resourceCulture);
+            }
+        }
     }
 }
