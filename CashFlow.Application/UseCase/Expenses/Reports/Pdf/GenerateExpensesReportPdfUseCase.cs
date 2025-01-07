@@ -29,6 +29,21 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         Document document = CreateDocument(month);
         Section page = CreatePage(document);
 
+        var table = page.AddTable();
+        table.AddColumn();
+        table.AddColumn();
+
+        // Retorna a lista de todas as linhas de todas as colunas
+        var row = table.AddRow();
+        // Nessa biblioteca a image aceita apenas string e não os bytes; Imagens precisam ser usados com parcimonia
+        row.Cells[0].AddImage("C:\\Users\\davi.santos\\Downloads\\LRPX6208411470702.jpg");
+        row.Cells[1].AddParagraph("Hey, Davi da Silva");
+        row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
+        
+
+
+
+
         Paragraph paragraph = page.AddParagraph();
         string title = string.Format(ResourceReportGenerationMessages.TOTAL_SPENT_IN, month.ToString("Y"));
 
