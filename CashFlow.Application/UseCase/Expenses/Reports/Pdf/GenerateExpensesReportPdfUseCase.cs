@@ -8,6 +8,7 @@ using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using PdfSharp.Fonts;
 using System.Reflection;
+using CashFlow.Domain.Extensions;
 
 namespace CashFlow.Application.UseCases.Expenses.Reports.Pdf;
 public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCase
@@ -61,7 +62,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
             row.Cells[1].AddParagraph(expense.Date.ToString("t"));
             SetStyleBaseForExpenseInformation(row.Cells[1]);
 
-            row.Cells[2].AddParagraph(expense.PaymentType.ToString());
+            row.Cells[2].AddParagraph(expense.PaymentType.PaymentTypeToString().ToString());
             SetStyleBaseForExpenseInformation(row.Cells[2]);
 
             AddAmountForExpense(row.Cells[3], expense.Amount);
