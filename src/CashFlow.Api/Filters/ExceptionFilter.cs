@@ -20,14 +20,14 @@ public class ExceptionFilter : IExceptionFilter
         }
     }
 
-    private void HandleProjectException(ExceptionContext context)
+    private static void HandleProjectException(ExceptionContext context)
     {
         var cashFlowException = context.Exception as CashFlowException;
         context.HttpContext.Response.StatusCode = cashFlowException!.StatusCode;
         context.Result = new ObjectResult(new ResponseErrorJson(cashFlowException.GetErrors()));
     }
 
-    private void ThrowUnkowError(ExceptionContext context)
+    private static void ThrowUnkowError(ExceptionContext context)
     {
         var errorResponse = new ResponseErrorJson(ResourceErrorMessages.UNKNOWN_ERROR); // Forma para retornar um JSON
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError; // Forma para retornar o status codes 

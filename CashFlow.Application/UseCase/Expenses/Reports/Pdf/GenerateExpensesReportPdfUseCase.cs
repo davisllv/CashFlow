@@ -79,6 +79,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
                 descriptionRow.Cells[0].MergeRight = 2;
                 descriptionRow.Cells[0].Format.LeftIndent = 20;
 
+                // Forma de juntar as tabelas.
                 row.Cells[3].MergeDown = 1;
             }
 
