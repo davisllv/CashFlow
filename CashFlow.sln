@@ -9,15 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{15D30E3C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Api", "src\CashFlow.Api\CashFlow.Api.csproj", "{6A85C3CA-B45E-40A2-879E-A466DA0FE5AA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Domain", "CashFlow.Domain\CashFlow.Domain.csproj", "{4A5AD6B3-5BA2-44AF-9398-BA4AD30AF873}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Domain", "src\CashFlow.Domain\CashFlow.Domain.csproj", "{4A5AD6B3-5BA2-44AF-9398-BA4AD30AF873}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Communication", "CashFlow.Communication\CashFlow.Communication.csproj", "{247D141F-76D1-40F0-B23E-E51947E1885C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Communication", "src\CashFlow.Communication\CashFlow.Communication.csproj", "{247D141F-76D1-40F0-B23E-E51947E1885C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Application", "CashFlow.Application\CashFlow.Application.csproj", "{C5A12FDB-5C76-43AE-B607-BD3E544A188C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Application", "src\CashFlow.Application\CashFlow.Application.csproj", "{C5A12FDB-5C76-43AE-B607-BD3E544A188C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Exception", "CashFlow.Exception\CashFlow.Exception.csproj", "{4006FC25-C010-48A2-8515-7CCD7594CF9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Exception", "src\CashFlow.Exception\CashFlow.Exception.csproj", "{4006FC25-C010-48A2-8515-7CCD7594CF9F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Infrastructure", "CashFlow.Infraestructure\CashFlow.Infrastructure.csproj", "{29E74175-828F-4CB2-B8A5-04D2397B4710}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Infrastructure", "src\CashFlow.Infraestructure\CashFlow.Infrastructure.csproj", "{29E74175-828F-4CB2-B8A5-04D2397B4710}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validators.Test", "test\Validators.Test\Validators.Test.csproj", "{FFFDE05A-CEC4-475B-B107-C550B8A26F88}"
 EndProject

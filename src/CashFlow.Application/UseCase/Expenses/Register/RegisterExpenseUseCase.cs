@@ -1,34 +1,43 @@
 ﻿using CashFlow.Communication.Request;
 using CashFlow.Communication.Responses;
+using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Domain.Entities;
 using CashFlow.Exception.ExceptionBase;
-using CashFlow.Infrastructure.DataAccess;
 using FluentValidation.Results;
+using CashFlow.Domain.Repositories;
+using AutoMapper;
 
 namespace CashFlow.Application.UseCase.Expenses.Register;
 
-public class RegisterExpenseUseCase
+public class RegisterExpenseUseCase : IRegisterExpenseUseCase
 {
-    public ResponseRegisterExpenseJson Execute(RequestRegisterExpenseJson request)
+    private readonly IExpenseWriteOnlyRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+    public RegisterExpenseUseCase(IExpenseWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
     {
-        // To do - Validation
-        Validate(request);
-
-        var dbContext = new CashFlowDbContext();
-
-        var entity = new Domain.Entities.Expenses
-        {
-            Amount = request.Amount,
-            Date = request.Date,
-            Description = request.Description,
-            Title = request.Title,
-        };
-
-        return new ResponseRegisterExpenseJson();
+        _repository = repository;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
-    private void Validate(RequestRegisterExpenseJson request)
+    public async Task<ResponseRegisterExpenseJson> Execute(RequestExpenseJson request)
     {
-        ValidationResult validation = new RegisterExpenseValidator().Validate(request);
+        // To do - Validation - Verified Commit
+        Validate(request);
+
+        Expense expense = _mapper.Map<Expense>(request);
+
+        await _repository.Add(expense);
+
+        await _unitOfWork.Commit();
+
+        return _mapper.Map<ResponseRegisterExpenseJson>(expense);
+    }
+
+    private void Validate(RequestExpenseJson request)
+    {
+        ValidationResult validation = new ExpenseValidator().Validate(request);
         if (!validation.IsValid)
         {
             var errorMessages = validation.Errors.Select(p => p.ErrorMessage).ToList();

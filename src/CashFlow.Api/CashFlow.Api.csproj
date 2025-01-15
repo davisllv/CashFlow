@@ -15,10 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CashFlow.Application\CashFlow.Application.csproj" />
-    <ProjectReference Include="..\..\CashFlow.Communication\CashFlow.Communication.csproj" />
-    <ProjectReference Include="..\..\CashFlow.Exception\CashFlow.Exception.csproj" />
-    <ProjectReference Include="..\..\CashFlow.Infraestructure\CashFlow.Infrastructure.csproj" />
+    <ProjectReference Include="..\CashFlow.Application\CashFlow.Application.csproj" />
+    <ProjectReference Include="..\CashFlow.Communication\CashFlow.Communication.csproj" />
+    <ProjectReference Include="..\CashFlow.Exception\CashFlow.Exception.csproj" />
+    <ProjectReference Include="..\CashFlow.Infraestructure\CashFlow.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
