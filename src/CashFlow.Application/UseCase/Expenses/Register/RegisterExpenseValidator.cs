@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace CashFlow.Application.UseCase.Expenses.Register;
 
-public class RegisterExpenseValidator : AbstractValidator<RequestRegisterExpenseJson>
+public class RegisterExpenseValidator : AbstractValidator<RequestExpenseJson>
 {
     // Colocando essas mensagens eu quebro o compartilhamento dos dados. Crio um arquivo de Resource para facilitar a guarda dos dados, posso mudar em apenas um lugar.
     // Sempre que for utilizar um arquivo resource, eu preciso de um que não tenha nenhuma tag. Ele vai ser o default.

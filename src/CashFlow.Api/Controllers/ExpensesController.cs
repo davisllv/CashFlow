@@ -20,7 +20,7 @@ public class ExpensesController : ControllerBase
     public async Task<IActionResult> Register([FromServices] IRegisterExpenseUseCase useCase, [FromBody] RequestExpenseJson request)
     {
         ResponseRegisterExpenseJson response = await useCase.Execute(request);
-        return Created();
+        return Created(string.Empty, response);
     }
 
     [HttpGet]

@@ -31,6 +31,7 @@ public class UpdateExpenseUseCase : IUpdateExpenseUseCase
 
         _mapper.Map(request, expense);
 
+
         _repository.Update(expense);
 
         await _unitOfWork.Commit();
