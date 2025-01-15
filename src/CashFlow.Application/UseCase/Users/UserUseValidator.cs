@@ -12,6 +12,7 @@ public class UserUseValidator : AbstractValidator<RequestUserJson>
             .EmailAddress()
             .WithMessage(ResourceErrorMessages.EMAIL_INVALID);
 
+        // FOrma de criar uma maneira de reutilizar a validação da senha
         RuleFor(user => user.Password).SetValidator(new PasswordValidator<RequestUserJson>());
     }
 }
