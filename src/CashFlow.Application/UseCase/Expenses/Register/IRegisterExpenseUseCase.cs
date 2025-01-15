@@ -1,5 +1,5 @@
 ﻿using CashFlow.Communication.Request;
-using CashFlow.Communication.Responses;
+using CashFlow.Communication.Responses.Expenses;
 
 namespace CashFlow.Application.UseCase.Expenses.Register;
 public interface IRegisterExpenseUseCase

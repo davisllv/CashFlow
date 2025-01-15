@@ -1,11 +1,11 @@
 ﻿using CashFlow.Communication.Request;
-using CashFlow.Communication.Responses;
 using CashFlow.Domain.Repositories.Expenses;
 using CashFlow.Domain.Entities;
 using CashFlow.Exception.ExceptionBase;
 using FluentValidation.Results;
 using CashFlow.Domain.Repositories;
 using AutoMapper;
+using CashFlow.Communication.Responses.Expenses;
 
 namespace CashFlow.Application.UseCase.Expenses.Register;
 

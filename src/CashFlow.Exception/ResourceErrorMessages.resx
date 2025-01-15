@@ -120,11 +120,20 @@
   <data name="AMOUNT_MUST_BE_GREATHER_THAN_ZERO" xml:space="preserve">
     <value>The amout must be greater than zero</value>
   </data>
+  <data name="EMAIL_EMPTY" xml:space="preserve">
+    <value>The email cannot be empty</value>
+  </data>
+  <data name="EMAIL_INVALID" xml:space="preserve">
+    <value>The email is invalid</value>
+  </data>
   <data name="EXPENSES_CANNOT_FOR_THE_FUTERE" xml:space="preserve">
     <value>Expenses cannot be for the future</value>
   </data>
   <data name="EXPENSE_NOT_FOUND" xml:space="preserve">
     <value>Expense not found</value>
+  </data>
+  <data name="NAME_EMPTY" xml:space="preserve">
+    <value>The name cannot be empty</value>
   </data>
   <data name="PAYMENT_TYPE_INVALID" xml:space="preserve">
     <value>Payment type is not valid</value>
