@@ -7,6 +7,6 @@ public abstract class CashFlowException : SystemException
         
     }
 
-    public abstract int StatusCode { get; }
+    public abstract int StatusCode { get; } // Abstract porque eu vou sobrescrever e eu não posso escrever nenhum método
     public abstract List<string> GetErrors();
 }
