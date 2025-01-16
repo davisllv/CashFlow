@@ -120,6 +120,9 @@
   <data name="AMOUNT_MUST_BE_GREATHER_THAN_ZERO" xml:space="preserve">
     <value>O valor deve ser maior que zero</value>
   </data>
+  <data name="EMAIL_ALREADY_REGISTER" xml:space="preserve">
+    <value>O e-email já foi registrado</value>
+  </data>
   <data name="EMAIL_EMPTY" xml:space="preserve">
     <value>O e-mail não pode estar vazio</value>
   </data>
