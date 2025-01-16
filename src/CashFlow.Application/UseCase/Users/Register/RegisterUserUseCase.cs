@@ -3,7 +3,6 @@ using CashFlow.Communication.Request;
 using CashFlow.Communication.Responses.Users;
 using CashFlow.Domain.Entities;
 using CashFlow.Domain.Repositories;
-using CashFlow.Domain.Repositories.Expenses;
 using CashFlow.Domain.Repositories.Users;
 using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Exception;
@@ -16,25 +15,31 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IMapper _mapper; // Para fazer o mapeamento dos dados vindos da request;
     private readonly IPasswordEncripter _passwordEncripter;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserWriteOnlyRepository _repository;
+    private readonly IUserWriteOnlyRepository _repositoryWriteOnly;
     private readonly IUserReadOnlyRepository _repositoryReadOnly;
 
     public RegisterUserUseCase(IMapper mapper, IUnitOfWork unitOfWork, IUserWriteOnlyRepository repository, IUserReadOnlyRepository repositoryReadOnly, IPasswordEncripter passwordEncripter)
     {
         _mapper = mapper;
         _unitOfWork  = unitOfWork;
-        _repository = repository;
+        _repositoryWriteOnly = repository;
         _passwordEncripter = passwordEncripter;
         _repositoryReadOnly = repositoryReadOnly;
     }
 
-    public Task<ResponseRegisterUserJson> Execute(RequestUserJson request)
+    public async Task<ResponseRegisterUserJson> Execute(RequestUserJson request)
     {
         Validate(request);
 
         User user = _mapper.Map<User>(request);
         user.Password = _passwordEncripter.Encrypt(user.Password);
-        
+        user.UserIdentifier = Guid.NewGuid(); // GUID é para utilizar o GUID para gerar o TOKEN
+
+        await _repositoryWriteOnly.Add(user);
+
+        await _unitOfWork.Commit();
+
+
         throw new NotImplementedException();
     }
 

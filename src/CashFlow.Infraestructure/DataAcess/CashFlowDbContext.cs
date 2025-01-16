@@ -8,5 +8,5 @@ internal class CashFlowDbContext : DbContext
     public CashFlowDbContext(DbContextOptions options) : base(options) { }
     // Eu passo para o construtor da classe base.
     public DbSet<Expense> Expenses { get; set; }
-    public DbSet<User> User { get; set; }
+    public DbSet<User> Users { get; set; }
 }

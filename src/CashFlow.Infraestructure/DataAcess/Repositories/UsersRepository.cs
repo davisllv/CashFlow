@@ -15,12 +15,12 @@ internal class UsersRepository : IUserWriteOnlyRepository, IUserReadOnlyReposito
 
     public async Task Add(User user)
     {
-        await _dbContext.User.AddAsync(user);
+        await _dbContext.Users.AddAsync(user);
     }
 
     public async Task<bool> ExistActiveUserWithEmail(string email)
     {
-        bool hasUser = await _dbContext.User.AnyAsync(u => u.Email.Equals(email));
+        bool hasUser = await _dbContext.Users.AnyAsync(u => u.Email.Equals(email));
 
         return hasUser;
     }

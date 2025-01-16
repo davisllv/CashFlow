@@ -8,3 +8,4 @@ public class User
     public Guid UserIdentifier { get; set; } // Para criar o token, não utilizar o email, visto que pode causar incongruências ao alterar o email.
     public string Rule { get; set; } = string.Empty;
 }
+
