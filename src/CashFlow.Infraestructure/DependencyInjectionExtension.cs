@@ -2,8 +2,9 @@
 using CashFlow.Domain.Repositories.Expenses;
 using CashFlow.Domain.Repositories.Users;
 using CashFlow.Domain.Security.Cryptography;
+using CashFlow.Domain.Security.Tokens;
 using CashFlow.Infraestructure.DataAcess.Repositories;
-using CashFlow.Infraestructure.Security;
+using CashFlow.Infraestructure.Security.Tokens;
 using CashFlow.Infrastructure.DataAccess;
 using CashFlow.Infrastructure.DataAccess.Respositories;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +14,24 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CashFlow.Infrastructure;
 
 // Classe precisa ser Statica e o método que será implementado também precisa ser státic.
+// IConfiguration - É para eu conseguir ter acesso aos métodos do appsettings
 public static class DependencyInjectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         AddDbContext(services, configuration);
+        AddToken(services, configuration);
         AddRepositories(services);
 
-        services.AddScoped<IPasswordEncripter, Infraestructure.Security.BCrypt>();
+        services.AddScoped<IPasswordEncripter, Infraestructure.Security.Cryptography.BCrypt>();
+    }
+
+    private static void AddToken(IServiceCollection services, IConfiguration configuration)
+    {
+        var expirationTimeMinutes = configuration.GetValue<uint>("Settings:Jwt:ExpiresMinutes");
+        var signKey = configuration.GetValue<string>("Settings:Jwt:SigninKey");
+
+        services.AddScoped<IAcessTokenGenerator>(config => new JwtTokenGenerator(expirationTimeMinutes, signKey!));
     }
 
     private static void AddRepositories(IServiceCollection services)
@@ -33,6 +44,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IUserWriteOnlyRepository, UsersRepository>();
         services.AddScoped<IUserReadOnlyRepository, UsersRepository>();
     }
+
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
