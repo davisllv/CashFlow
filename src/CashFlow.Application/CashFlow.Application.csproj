@@ -33,8 +33,4 @@
     <ProjectReference Include="..\CashFlow.Exception\CashFlow.Exception.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCase\Users\NovaPasta\" />
-  </ItemGroup>
-
 </Project>

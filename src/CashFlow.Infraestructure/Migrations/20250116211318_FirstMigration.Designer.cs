@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CashFlow.Infraestructure.Migrations
 {
     [DbContext(typeof(CashFlowDbContext))]
-    [Migration("20250116135024_FirstMigration")]
+    [Migration("20250116211318_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -49,10 +49,10 @@ namespace CashFlow.Infraestructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<long>("UserId1")
+                    b.Property<long?>("UserId1")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -98,9 +98,7 @@ namespace CashFlow.Infraestructure.Migrations
                 {
                     b.HasOne("CashFlow.Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });

@@ -32,10 +32,10 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
     public async Task<ResponseRegisterUserJson> Execute(RequestUserJson request)
     {
-        Validate(request);
+        await Validate(request);
 
         User user = _mapper.Map<User>(request);
-        user.Password = _passwordEncripter.Encrypt(user.Password);
+        user.Password = _passwordEncripter.Encrypt(request.Password);
         user.UserIdentifier = Guid.NewGuid(); // GUID é para utilizar o GUID para gerar o TOKEN
 
         await _repositoryWriteOnly.Add(user);
@@ -50,7 +50,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         };
     }
 
-    private async void Validate(RequestUserJson request)
+    private async Task Validate(RequestUserJson request)
     {
         ValidationResult validation = new UserUseValidator().Validate(request);
 

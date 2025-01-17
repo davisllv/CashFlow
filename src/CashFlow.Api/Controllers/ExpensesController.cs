@@ -7,17 +7,20 @@ using CashFlow.Communication.Request;
 using CashFlow.Communication.Responses;
 using CashFlow.Communication.Responses.Expenses;
 using CashFlow.Exception.ExceptionBase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]// Dessa forma é para transformar que TODO o controller vão precisar de autorização.
 public class ExpensesController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisterExpenseJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorOnValidationException), StatusCodes.Status400BadRequest)]
+    // [Authorize] Preciso fazer isso para somente ter acesso ao endpoint caso eu tenha feito login, mas no endpoint específico
     public async Task<IActionResult> Register([FromServices] IRegisterExpenseUseCase useCase, [FromBody] RequestExpenseJson request)
     {
         ResponseRegisterExpenseJson response = await useCase.Execute(request);

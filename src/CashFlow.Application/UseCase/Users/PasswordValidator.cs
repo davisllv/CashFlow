@@ -34,7 +34,25 @@ public partial class PasswordValidator<T> : PropertyValidator<T, string>
         // [A-Z] - Pelo menos um maiculo
 
         // [A-Z] - Pelo menos um MINUSCULO
-        if (UpperCaseLetter().IsMatch(password) == false || LowerCaseLetter().IsMatch(password) == false || Numbers().IsMatch(password) == false || SpecialCaracteres().IsMatch(password) == false)
+        if (UpperCaseLetter().IsMatch(password) == false)
+        {
+            context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, ResourceErrorMessages.INVALID_PASSWORD);
+            return false;
+        }
+
+        if(LowerCaseLetter().IsMatch(password) == false)
+        {
+            context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, ResourceErrorMessages.INVALID_PASSWORD);
+            return false;
+        } 
+        
+        if(Numbers().IsMatch(password) == false)
+        {
+            context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, ResourceErrorMessages.INVALID_PASSWORD);
+            return false;
+        }
+        
+        if(SpecialCaracteres().IsMatch(password) == false)
         {
             context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, ResourceErrorMessages.INVALID_PASSWORD);
             return false;
@@ -49,6 +67,6 @@ public partial class PasswordValidator<T> : PropertyValidator<T, string>
     private static partial Regex LowerCaseLetter();
     [GeneratedRegex(@"[0-9]+")]
     private static partial Regex Numbers();
-    [GeneratedRegex(@"[\!\?\*\.]+")]
+    [GeneratedRegex(@"[\@\!\?\*\.]+")]
     private static partial Regex SpecialCaracteres();
 }
