@@ -1,7 +1,16 @@
-﻿using CashFlow.Application.UseCase.Users.Register;
+﻿using AutoMapper;
+using CashFlow.Application.UseCase.Users.Register;
+using CashFlow.Communication.Request;
+using CashFlow.Communication.Responses.Users;
+using CashFlow.Domain.Repositories;
+using CashFlow.Domain.Repositories.Users;
+using CashFlow.Domain.Security.Cryptography;
+using CashFlow.Domain.Security.Tokens;
+using CommomTestUtilities.Cryptography;
 using CommomTestUtilities.Mapper;
 using CommomTestUtilities.Repositories;
 using CommomTestUtilities.Request;
+using CommomTestUtilities.Token;
 using FluentAssertions;
 
 namespace UseCases.Test.Users.Register;
@@ -10,10 +19,10 @@ public class RegisterUserUseCaseTest
     [Fact]
     public async Task Execute()
     {
-        var useCase = CreateUseCase();
-        var request = RequestRegisterUserJsonBuilder.Build();
+        RegisterUserUseCase useCase = CreateUseCase();
+        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
 
-        var result = await useCase.Execute(request);
+        ResponseRegisterUserJson result = await useCase.Execute(request);
 
         result.Should().NotBeNull();
         result.Name.Should().Be(request.Name);
@@ -22,12 +31,19 @@ public class RegisterUserUseCaseTest
 
     private RegisterUserUseCase CreateUseCase()
     {
-        var mapper = MapperBuilder.Build(); // Eu vou colocando algumas coisas de forma real ou não.
+        IMapper mapper = MapperBuilder.Build(); 
+        // Eu vou colocando algumas coisas de forma real ou não.
         // São criado repositórios fakes, com nenhuma implementação real. É só algo fake, pois só preciso testar a regra de negócio, não a inserção no banco de dados.
-        // São Formatos simples pois não retornam nenhum valor.
-        var unitOfWork = UnitOfWorkBuilder.Build();
-        var writeRepository = UserWriteOnlyRepositoryBuilder.Build();
+        // São Formatos simples pois não retornam nenhum valor. Mock - São implementações fakes
+        // Posso fazer mock em classes, mas ai eu preciso fazer implementações específicas para aquela clase - Errado
 
-        return new RegisterUserUseCase(mapper, unitOfWork, writeRepository, null, null, null);
+        IUnitOfWork unitOfWork = UnitOfWorkBuilder.Build();
+        IUserWriteOnlyRepository writeRepository = UserWriteOnlyRepositoryBuilder.Build();
+
+        // Esse é o formato para criar um mock com retornos que não void. São retornos fixos.
+        IPasswordEncripter passwordEncripter = PasswordEncripterBuilder.Build();
+        IAcessTokenGenerator acessTokenGenerator = AcessTokenGeneratorBuilder.Build();
+
+        return new RegisterUserUseCase(mapper, unitOfWork, writeRepository, null, passwordEncripter, acessTokenGenerator);
     }
 }
