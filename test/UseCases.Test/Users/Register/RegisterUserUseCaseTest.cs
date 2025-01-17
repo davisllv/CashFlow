@@ -41,9 +41,12 @@ public class RegisterUserUseCaseTest
         IUserWriteOnlyRepository writeRepository = UserWriteOnlyRepositoryBuilder.Build();
 
         // Esse é o formato para criar um mock com retornos que não void. São retornos fixos.
+        // Dessa forma ele faz com que todos os retornos seja o valor default.
         IPasswordEncripter passwordEncripter = PasswordEncripterBuilder.Build();
         IAcessTokenGenerator acessTokenGenerator = AcessTokenGeneratorBuilder.Build();
 
-        return new RegisterUserUseCase(mapper, unitOfWork, writeRepository, null, passwordEncripter, acessTokenGenerator);
+        IUserReadOnlyRepository readRepository = new UserReadOnlyRepositoryBuilder().Build();
+
+        return new RegisterUserUseCase(mapper, unitOfWork, writeRepository, readRepository, passwordEncripter, acessTokenGenerator);
     }
 }
