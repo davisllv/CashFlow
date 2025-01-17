@@ -1,4 +1,6 @@
 ﻿using CashFlow.Application.UseCase.Users.Register;
+using CommomTestUtilities.Mapper;
+using CommomTestUtilities.Repositories;
 using CommomTestUtilities.Request;
 using FluentAssertions;
 
@@ -20,6 +22,12 @@ public class RegisterUserUseCaseTest
 
     private RegisterUserUseCase CreateUseCase()
     {
-        return new RegisterUserUseCase();
+        var mapper = MapperBuilder.Build(); // Eu vou colocando algumas coisas de forma real ou não.
+        // São criado repositórios fakes, com nenhuma implementação real. É só algo fake, pois só preciso testar a regra de negócio, não a inserção no banco de dados.
+        // São Formatos simples pois não retornam nenhum valor.
+        var unitOfWork = UnitOfWorkBuilder.Build();
+        var writeRepository = UserWriteOnlyRepositoryBuilder.Build();
+
+        return new RegisterUserUseCase(mapper, unitOfWork, writeRepository, null, null, null);
     }
 }
