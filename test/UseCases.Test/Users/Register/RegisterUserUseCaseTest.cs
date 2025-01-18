@@ -6,6 +6,8 @@ using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Users;
 using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Domain.Security.Tokens;
+using CashFlow.Exception;
+using CashFlow.Exception.ExceptionBase;
 using CommomTestUtilities.Cryptography;
 using CommomTestUtilities.Mapper;
 using CommomTestUtilities.Repositories;
@@ -16,22 +18,9 @@ using FluentAssertions;
 namespace UseCases.Test.Users.Register;
 public class RegisterUserUseCaseTest
 {
-    [Fact]
-    public async Task Execute()
-    {
-        RegisterUserUseCase useCase = CreateUseCase();
-        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
-
-        ResponseRegisterUserJson result = await useCase.Execute(request);
-
-        result.Should().NotBeNull();
-        result.Name.Should().Be(request.Name);
-        result.Token.Should().NotBeNullOrWhiteSpace();
-    }
-
     private RegisterUserUseCase CreateUseCase()
     {
-        IMapper mapper = MapperBuilder.Build(); 
+        IMapper mapper = MapperBuilder.Build();
         // Eu vou colocando algumas coisas de forma real ou não.
         // São criado repositórios fakes, com nenhuma implementação real. É só algo fake, pois só preciso testar a regra de negócio, não a inserção no banco de dados.
         // São Formatos simples pois não retornam nenhum valor. Mock - São implementações fakes
@@ -49,4 +38,45 @@ public class RegisterUserUseCaseTest
 
         return new RegisterUserUseCase(mapper, unitOfWork, writeRepository, readRepository, passwordEncripter, acessTokenGenerator);
     }
+    [Fact]
+    public async Task Execute()
+    {
+        RegisterUserUseCase useCase = CreateUseCase();
+        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+
+        ResponseRegisterUserJson result = await useCase.Execute(request);
+
+        result.Should().NotBeNull();
+        result.Name.Should().Be(request.Name);
+        result.Token.Should().NotBeNullOrWhiteSpace();
+    }
+    [Fact]
+    public async Task Error_Name_Empty()
+    {
+        RegisterUserUseCase useCase = CreateUseCase();
+        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+        request.Name = string.Empty;
+
+        var act = async () => await useCase.Execute(request);
+        // A função vai estourar um erro e não retornar nada.
+        // A forma abaixo é uma maneira de especificar mais ainda para obter a exceção.
+        var result = await act.Should().ThrowAsync<ErrorOnValidationException>();
+
+        result.Where(ex => ex.GetErrors().Count == 1 && ex.GetErrors().Contains(ResourceErrorMessages.NAME_EMPTY));
+    }
+    [Fact]
+    public async Task Error_Email_Empty()
+    {
+        RegisterUserUseCase useCase = CreateUseCase();
+        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+        request.Email = string.Empty;
+
+        var act = async () => await useCase.Execute(request);
+        // A função vai estourar um erro e não retornar nada.
+        // A forma abaixo é uma maneira de especificar mais ainda para obter a exceção.
+        var result = await act.Should().ThrowAsync<ErrorOnValidationException>();
+
+        result.Where(ex => ex.GetErrors().Count == 1 && ex.GetErrors().Contains(ResourceErrorMessages.EMAIL_EMPTY));
+    }
+
 }
