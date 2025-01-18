@@ -1,4 +1,5 @@
-﻿using CashFlow.Domain.Repositories.Users;
+﻿using CashFlow.Domain.Entities;
+using CashFlow.Domain.Repositories.Users;
 using Moq;
 
 namespace CommomTestUtilities.Repositories;
@@ -14,6 +15,13 @@ public class UserReadOnlyRepositoryBuilder
     {
         // Forma de definir um formato diferente para retornar um valor true caso esse valor seja igual ao digitado
         _repository.Setup(userReadOnly => userReadOnly.ExistActiveUserWithEmail(email)).ReturnsAsync(true);
+    }
+
+    public UserReadOnlyRepositoryBuilder GetUserByEmail(CashFlow.Domain.Entities.User user)
+    {
+        _repository.Setup(userRepo => userRepo.GetUserByEmail(user.Email)).ReturnsAsync(user);
+        // Para retornar a instância e encadear
+        return this;
     }
 
     public IUserReadOnlyRepository Build() => _repository.Object;

@@ -31,7 +31,7 @@ public class RegisterUserUseCaseTest
 
         // Esse é o formato para criar um mock com retornos que não void. São retornos fixos.
         // Dessa forma ele faz com que todos os retornos seja o valor default.
-        IPasswordEncripter passwordEncripter = PasswordEncripterBuilder.Build();
+        IPasswordEncripter passwordEncripter = new PasswordEncripterBuilder().Build();
         IAcessTokenGenerator acessTokenGenerator = AcessTokenGeneratorBuilder.Build();
 
         UserReadOnlyRepositoryBuilder readRepository = new UserReadOnlyRepositoryBuilder();
