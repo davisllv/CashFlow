@@ -18,7 +18,7 @@ using FluentAssertions;
 namespace UseCases.Test.Users.Register;
 public class RegisterUserUseCaseTest
 {
-    private RegisterUserUseCase CreateUseCase()
+    private RegisterUserUseCase CreateUseCase(string? email = null)
     {
         IMapper mapper = MapperBuilder.Build();
         // Eu vou colocando algumas coisas de forma real ou não.
@@ -34,9 +34,13 @@ public class RegisterUserUseCaseTest
         IPasswordEncripter passwordEncripter = PasswordEncripterBuilder.Build();
         IAcessTokenGenerator acessTokenGenerator = AcessTokenGeneratorBuilder.Build();
 
-        IUserReadOnlyRepository readRepository = new UserReadOnlyRepositoryBuilder().Build();
+        UserReadOnlyRepositoryBuilder readRepository = new UserReadOnlyRepositoryBuilder();
 
-        return new RegisterUserUseCase(mapper, unitOfWork, writeRepository, readRepository, passwordEncripter, acessTokenGenerator);
+        // Por isso foi criado o new, para eu conseguir acessar outros métodos
+        if(!string.IsNullOrEmpty(email))
+            readRepository.ExistActiveUserWithEmail(email);
+
+        return new RegisterUserUseCase(mapper, unitOfWork, writeRepository, readRepository.Build(), passwordEncripter, acessTokenGenerator);
     }
     [Fact]
     public async Task Execute()
@@ -72,11 +76,21 @@ public class RegisterUserUseCaseTest
         request.Email = string.Empty;
 
         var act = async () => await useCase.Execute(request);
-        // A função vai estourar um erro e não retornar nada.
-        // A forma abaixo é uma maneira de especificar mais ainda para obter a exceção.
         var result = await act.Should().ThrowAsync<ErrorOnValidationException>();
 
         result.Where(ex => ex.GetErrors().Count == 1 && ex.GetErrors().Contains(ResourceErrorMessages.EMAIL_EMPTY));
+    }
+    [Fact]
+    public async Task Error_Email_Already_Exists()
+    {
+        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+        RegisterUserUseCase useCase = CreateUseCase(request.Email);
+
+        var act = async () => await useCase.Execute(request);
+
+        var result = await act.Should().ThrowAsync<ErrorOnValidationException>();
+
+        result.Where(ex => ex.GetErrors().Count == 1 && ex.GetErrors().Contains(ResourceErrorMessages.EMAIL_ALREADY_REGISTER));
     }
 
 }
