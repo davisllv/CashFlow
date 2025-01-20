@@ -100,3 +100,5 @@ async Task MigrateDataBase()
     // Faço esse formato para que eu não tenha acesso direto ao dbContext dentro do program, visto que ele é internal
     await DataBaseMigration.MigrateDatabase(scope.ServiceProvider);
 }
+// Preciso definir para eu ter acesso ao prgram no test de integração
+public partial class Program { }
