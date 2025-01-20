@@ -4,13 +4,13 @@ public class ResponseErrorJson
 {
     public ResponseErrorJson(string error)
     {
-        ErrorMessage = [error];
+        ErrorMessages = [error];
     }
 
     public ResponseErrorJson(List<string> error)
     {
-        ErrorMessage = error;
+        ErrorMessages = error;
     }
 
-    public List<string> ErrorMessage {  get; set; } // Para não esquecer de definir uma mensagem de erro; Eu posso colocar o required ou definir um construtor
+    public List<string> ErrorMessages {  get; set; } // Para não esquecer de definir uma mensagem de erro; Eu posso colocar o required ou definir um construtor
 }

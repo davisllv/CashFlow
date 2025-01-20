@@ -19,7 +19,7 @@ public class ExpensesController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisterExpenseJson), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ErrorOnValidationException), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     // [Authorize] Preciso fazer isso para somente ter acesso ao endpoint caso eu tenha feito login, mas no endpoint específico
     public async Task<IActionResult> Register([FromServices] IRegisterExpenseUseCase useCase, [FromBody] RequestExpenseJson request)
     {

@@ -1,7 +1,7 @@
 ﻿using CashFlow.Application.UseCase.Users.Register;
 using CashFlow.Communication.Request;
+using CashFlow.Communication.Responses;
 using CashFlow.Communication.Responses.Users;
-using CashFlow.Exception.ExceptionBase;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Api.Controllers;
@@ -11,7 +11,7 @@ public class UsersController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisterUserJson), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ErrorOnValidationException), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(
         [FromServices] IRegisterUserUseCase _useCase,
         [FromBody] RequestUserJson request)
