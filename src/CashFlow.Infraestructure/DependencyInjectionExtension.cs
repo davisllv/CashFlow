@@ -4,6 +4,7 @@ using CashFlow.Domain.Repositories.Users;
 using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Domain.Security.Tokens;
 using CashFlow.Infraestructure.DataAcess.Repositories;
+using CashFlow.Infraestructure.Extensions;
 using CashFlow.Infraestructure.Security.Tokens;
 using CashFlow.Infrastructure.DataAccess;
 using CashFlow.Infrastructure.DataAccess.Respositories;
@@ -19,11 +20,13 @@ public static class DependencyInjectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        AddDbContext(services, configuration);
+        services.AddScoped<IPasswordEncripter, Infraestructure.Security.Cryptography.BCrypt>();
+
         AddToken(services, configuration);
         AddRepositories(services);
 
-        services.AddScoped<IPasswordEncripter, Infraestructure.Security.Cryptography.BCrypt>();
+        if (!configuration.IsTestEnvironment())
+            AddDbContext(services, configuration);
     }
 
     private static void AddToken(IServiceCollection services, IConfiguration configuration)

@@ -1,5 +1,6 @@
 using CashFlow.Api.Filters;
 using CashFlow.Api.Middleware;
+using CashFlow.Infraestructure.Extensions;
 using CashFlow.Infraestructure.Migrations;
 using CashFlow.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -88,11 +89,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-await MigrateDataBase();
+if(!builder.Configuration.IsTestEnvironment())
+    await MigrateDataBase();
 
 app.Run();
 
 // Forma de criar um função para poder criar e gerar as migrations toda vez que o projeto for rodado.
+// Preciso remover a execução dessa função caso seja test.
 async Task MigrateDataBase()
 {
     // Feito a simulação de uma injeção de dependência com a inserção de um scopo, para inserir o DbContext
