@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using WebApi.Test.InlineData;
 
 namespace WebApi.Test.Users.Register;
 public class RegisterUserTest : IClassFixture<CustomWebApplicationFactory>
@@ -40,9 +41,7 @@ public class RegisterUserTest : IClassFixture<CustomWebApplicationFactory>
         response.RootElement.GetProperty("token").GetString().Should().NotBeNullOrEmpty();
     }
     [Theory]
-    [InlineData("en")]
-    [InlineData("pt-BR")]
-    [InlineData("pt-PT")]
+    [ClassData(typeof(CultureInlineDataTest))] // Forma de fazer com que seja criado uma lista de valores;
     public async Task Error_Empty_Name(string cultureInfo)
     {
         RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
