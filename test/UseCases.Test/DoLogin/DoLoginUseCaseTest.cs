@@ -1,9 +1,7 @@
 ﻿using CashFlow.Application.UseCase.Login.DoLogin;
-using CashFlow.Application.UseCase.Users.Register;
 using CashFlow.Communication.Request;
 using CashFlow.Communication.Responses.Users;
 using CashFlow.Domain.Entities;
-using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Domain.Security.Tokens;
 using CashFlow.Exception;
 using CashFlow.Exception.ExceptionBase;

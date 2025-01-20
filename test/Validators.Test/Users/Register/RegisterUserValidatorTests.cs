@@ -1,7 +1,6 @@
 ﻿using CashFlow.Application.UseCase.Users;
 using CashFlow.Exception;
 using CommomTestUtilities.Request;
-using DocumentFormat.OpenXml.Spreadsheet;
 using FluentAssertions;
 
 namespace Validators.Test.Users.Register;

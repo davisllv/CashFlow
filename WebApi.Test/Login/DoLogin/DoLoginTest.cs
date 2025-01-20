@@ -1,11 +1,5 @@
-﻿using System;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebApi.Test.Login.DoLogin;
-internal class DoLoginTest
+﻿namespace WebApi.Test.Login.DoLogin;
+public class DoLoginTest
 {
+
 }
