@@ -11,6 +11,7 @@ using CashFlow.Exception.ExceptionBase;
 using CommomTestUtilities.Cryptography;
 using CommomTestUtilities.Mapper;
 using CommomTestUtilities.Repositories;
+using CommomTestUtilities.Repositories.User;
 using CommomTestUtilities.Request;
 using CommomTestUtilities.Token;
 using FluentAssertions;
@@ -43,7 +44,7 @@ public class RegisterUserUseCaseTest
         return new RegisterUserUseCase(mapper, unitOfWork, writeRepository, readRepository.Build(), passwordEncripter, acessTokenGenerator);
     }
     [Fact]
-    public async Task Execute()
+    public async Task Sucess()
     {
         RegisterUserUseCase useCase = CreateUseCase();
         RequestUserJson request = RequestRegisterUserJsonBuilder.Build();

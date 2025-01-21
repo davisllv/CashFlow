@@ -49,11 +49,13 @@ builder.Services.AddSwaggerGen(c => {
 
 builder.Services.AddMvc(option => option.Filters.Add(typeof(ExceptionFilter))); // Para definir onde estará os errors;
 
-// DependencyInjectionExtension.AddInfrastructure(builder.Services); A forma a baixo é uma forma de extender as funcionalidades do IServiceCollection
+// DependencyInjectionExtension.AddInfrastructure(builder.Services); A forma a baixo é uma forma de extender as funcionalidades do IServiceCollection, colocando a interface e um this antes, a classe e o método tem que ser estáticos.
  
-builder.Services.AddInfrastructure(builder.Configuration); // Fica mais fácil de gerir a injeção de dependência, porque eu apenas adiciono os repositórios dentro desse método.
+builder.Services.AddInfrastructure(builder.Configuration); // Fica mais fácil de gerir a injeção de dependência, porque eu apenas adiciono os repositórios dentro desse método. Extendido a interface IServiceCollection
 builder.Services.AddApplication();
+// Formato de ter acesso, via injeção de dependência, lá em infraestrutura do token, que está no projeto de API
 builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
+// Sinalizo para o services dar acesso ao context acessor
 builder.Services.AddHttpContextAccessor();
 
 //Passos para Validação do TOken
