@@ -13,7 +13,7 @@ namespace CashFlow.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]// Dessa forma é para transformar que TODO o controller vão precisar de autorização.
+[Authorize] // Dessa forma é para transformar que TODO o controller vão precisar de autorização.
 public class ExpensesController : ControllerBase
 {
     [HttpPost]

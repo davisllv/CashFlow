@@ -1,5 +1,7 @@
 using CashFlow.Api.Filters;
 using CashFlow.Api.Middleware;
+using CashFlow.Api.Token;
+using CashFlow.Domain.Security.Tokens;
 using CashFlow.Infraestructure.Extensions;
 using CashFlow.Infraestructure.Migrations;
 using CashFlow.Infrastructure;
@@ -51,6 +53,8 @@ builder.Services.AddMvc(option => option.Filters.Add(typeof(ExceptionFilter))); 
  
 builder.Services.AddInfrastructure(builder.Configuration); // Fica mais fácil de gerir a injeção de dependência, porque eu apenas adiciono os repositórios dentro desse método.
 builder.Services.AddApplication();
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
+builder.Services.AddHttpContextAccessor();
 
 //Passos para Validação do TOken
 var signKey = builder.Configuration.GetValue<string>("Settings:Jwt:SigninKey");

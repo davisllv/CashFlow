@@ -43,9 +43,9 @@ internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnl
     }
 
     // Essa é uma forma de diferenciar quais os métodos estão sendo chamados de acordo com a interface
-    async Task<Expense?> IExpenseUpdateOnlyRepository.GetById(long id)
+    async Task<Expense?> IExpenseUpdateOnlyRepository.GetById(User user, long id)
     {
-        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
+        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
     }
 
     public void Update(Expense expense)

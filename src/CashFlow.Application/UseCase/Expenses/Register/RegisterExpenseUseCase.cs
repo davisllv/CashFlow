@@ -6,6 +6,7 @@ using FluentValidation.Results;
 using CashFlow.Domain.Repositories;
 using AutoMapper;
 using CashFlow.Communication.Responses.Expenses;
+using CashFlow.Domain.Services.LoggedUser;
 
 namespace CashFlow.Application.UseCase.Expenses.Register;
 
@@ -14,11 +15,13 @@ public class RegisterExpenseUseCase : IRegisterExpenseUseCase
     private readonly IExpenseWriteOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public RegisterExpenseUseCase(IExpenseWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    private readonly ILoggedUser _loggedUser;
+    public RegisterExpenseUseCase(IExpenseWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper, ILoggedUser loggedUser)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _loggedUser = loggedUser;
     }
 
     public async Task<ResponseRegisterExpenseJson> Execute(RequestExpenseJson request)
@@ -26,7 +29,10 @@ public class RegisterExpenseUseCase : IRegisterExpenseUseCase
         // To do - Validation - Verified Commit
         Validate(request);
 
+        var loggedUser = await _loggedUser.Get();
+
         Expense expense = _mapper.Map<Expense>(request);
+        expense.UserId = loggedUser.Id;
 
         await _repository.Add(expense);
 
