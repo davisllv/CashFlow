@@ -10,5 +10,5 @@ public interface IExpenseWriteOnlyRepository
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<bool> Delete(long id);
+    Task Delete(long id);
 }

@@ -17,29 +17,22 @@ internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnl
         // Não colocar o commit no repositório e sim na regra de negócio.
     }
 
-    public async Task<bool> Delete(long id)
+    public async Task Delete(long id)
     {
-        var response = await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
-
-        if (response is null)
-        {
-            return false;
-        }
+        var response = await _dbContext.Expenses.FirstAsync(expense => expense.Id == id);
 
         _dbContext.Expenses.Remove(response);
-
-        return true;
     }
 
-    public async Task<List<Expense>> GetAll()
+    public async Task<List<Expense>> GetAll(User user)
     {
         // AsNoTracking - Não é preciso salvar cache de nada, visto que não vai ser feito nenhuma alteração. Torna as consultas mais rápidas. Quando for feito uma alteração no banco não deve ser feito assim.
-        return await _dbContext.Expenses.AsNoTracking().ToListAsync();
+        return await _dbContext.Expenses.AsNoTracking().Where(expense => expense.UserId == user.Id).ToListAsync();
     }
 
-    async Task<Expense?> IExpenseReadOnlyRepository.GetById(long id)
+    async Task<Expense?> IExpenseReadOnlyRepository.GetById(User user, long id)
     {
-        return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
+        return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id && user.Id == expense.UserId);
     }
 
     // Essa é uma forma de diferenciar quais os métodos estão sendo chamados de acordo com a interface
