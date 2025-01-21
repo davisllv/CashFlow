@@ -19,7 +19,7 @@ public class GetAllExpensesUseCase : IGetAllExpensesUseCase
     }
     public async Task<ResponseExpensesJson> Execute()
     {
-        var userLogged = _loggedUser.Get();
+        var userLogged = await _loggedUser.Get();
         List<Expense> result = await _repository.GetAll(userLogged);
         return new ResponseExpensesJson
         {

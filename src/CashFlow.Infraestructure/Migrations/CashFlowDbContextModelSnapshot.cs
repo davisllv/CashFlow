@@ -46,15 +46,12 @@ namespace CashFlow.Infraestructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("UserId1")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Expenses");
                 });
@@ -79,7 +76,7 @@ namespace CashFlow.Infraestructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Rule")
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -95,7 +92,7 @@ namespace CashFlow.Infraestructure.Migrations
                 {
                     b.HasOne("CashFlow.Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

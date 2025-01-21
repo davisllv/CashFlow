@@ -23,7 +23,8 @@ public class JwtTokenGenerator : IAcessTokenGenerator
         var claims = new List<Claim>() // Claims são os valores que ficam no payload, logo, parcimônia para escolher os dados que vão ficar no payload, visto que ele é descriptografado.
         {
             new Claim(ClaimTypes.Name, user.Name),
-            new Claim(ClaimTypes.Sid, user.UserIdentifier.ToString())
+            new Claim(ClaimTypes.Sid, user.UserIdentifier.ToString()),
+            new Claim(ClaimTypes.Role, user.Role)
         };
 
         var tokenDescriptor = new SecurityTokenDescriptor

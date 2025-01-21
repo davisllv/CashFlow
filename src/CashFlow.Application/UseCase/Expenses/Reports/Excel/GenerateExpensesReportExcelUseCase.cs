@@ -1,6 +1,7 @@
 ﻿using CashFlow.Domain.Extensions;
 using CashFlow.Domain.Reports;
 using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Domain.Services.LoggedUser;
 using ClosedXML.Excel;
 // Using para importar
 
@@ -11,13 +12,16 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
     private const string CURRENCY_SYMBOL = "$";
 
     private readonly IExpenseReadOnlyRepository _repository;
-    public GenerateExpensesReportExcelUseCase(IExpenseReadOnlyRepository repository)
+    private readonly ILoggedUser _loggedUser;
+    public GenerateExpensesReportExcelUseCase(IExpenseReadOnlyRepository repository, ILoggedUser loggedUser)
     {
         _repository = repository;
+        _loggedUser = loggedUser;
     }
 
     public async Task<byte[]> Execute(DateOnly month)
     {
+        var user = await _loggedUser.Get();
         var expenses = await _repository.FilterByMonth(month);
         // Caso não tenha expenses, não faz sentido retornar o um excel com apenas cabeçalho.
         if (expenses.Count == 0)
@@ -25,7 +29,7 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
         // Using obriga a utilização de classes disposable, garantir que ao final do escopo será liberado a utilização dos recursos
         using var workbook = new XLWorkbook();
 
-        workbook.Author = "Davi da Silva dos Santos";
+        workbook.Author = user.Name;
         workbook.Style.Font.FontSize = 12;
         workbook.Style.Font.FontName = "Times New Roman";
 

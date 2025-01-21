@@ -9,6 +9,7 @@ using MigraDoc.Rendering;
 using PdfSharp.Fonts;
 using System.Reflection;
 using CashFlow.Domain.Extensions;
+using CashFlow.Domain.Services.LoggedUser;
 
 namespace CashFlow.Application.UseCases.Expenses.Reports.Pdf;
 public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCase
@@ -17,27 +18,29 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
     private const int HEIGHT_ROW_EXPENSE_TABLE = 25;
 
     private readonly IExpenseReadOnlyRepository _repository;
+    private readonly ILoggedUser _loggedUser;
 
-    public GenerateExpensesReportPdfUseCase(IExpenseReadOnlyRepository repository)
+    public GenerateExpensesReportPdfUseCase(IExpenseReadOnlyRepository repository, ILoggedUser loggedUser)
     {
         _repository = repository;
-
+        _loggedUser = loggedUser;
         GlobalFontSettings.FontResolver = new ExpensesReportFontResolver();
     }
 
     public async Task<byte[]> Execute(DateOnly month)
     {
-
+        var user = await _loggedUser.Get();
         var expenses = await _repository.FilterByMonth(month);
+
         if (expenses.Count == 0)
         {
             return [];
         }
 
-        var document = CreateDocument(month);
+        var document = CreateDocument(user, month);
         var page = CreatePage(document);
 
-        CreateHeaderWithProfilePhotoAndName(page);
+        CreateHeaderWithProfilePhotoAndName(user, page);
 
         var totalExpenses = expenses.Sum(expense => expense.Amount);
         CreateTotalSpentSection(page, month, totalExpenses);
@@ -89,12 +92,12 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         return RenderDocument(document);
     }
 
-    private Document CreateDocument(DateOnly month)
+    private Document CreateDocument(Domain.Entities.User user, DateOnly month)
     {
         var document = new Document();
 
         document.Info.Title = $"{ResourceReportGenerationMessages.EXPENSES_FOR} {month:Y}";
-        document.Info.Author = "Davi da Silva dos Santos";
+        document.Info.Author = user.Name ;
 
         var style = document.Styles["Normal"];
         style!.Font.Name = FontHelper.RALEWAY_REGULAR;
@@ -117,7 +120,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         return section;
     }
 
-    private void CreateHeaderWithProfilePhotoAndName(Section page)
+    private void CreateHeaderWithProfilePhotoAndName(Domain.Entities.User user, Section page)
     {
         var table = page.AddTable();
         table.AddColumn();
@@ -131,9 +134,9 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
 
         row.Cells[0].AddImage(pathFile);
 
-        row.Cells[1].AddParagraph($"Hey, Davi da Silva");
+        row.Cells[1].AddParagraph($"Olá, {user.Name}");
         row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
-        row.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+        row.Cells[1].VerticalAlignment = VerticalAlignment.Center;
     }
 
     private void CreateTotalSpentSection(Section page, DateOnly month, decimal totalExpenses)
