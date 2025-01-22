@@ -21,6 +21,7 @@ public class GetAllExpensesUseCase : IGetAllExpensesUseCase
     {
         var userLogged = await _loggedUser.Get();
         List<Expense> result = await _repository.GetAll(userLogged);
+
         return new ResponseExpensesJson
         {
             Expenses = _mapper.Map<List<ResponseShortExpenseJson>>(result)

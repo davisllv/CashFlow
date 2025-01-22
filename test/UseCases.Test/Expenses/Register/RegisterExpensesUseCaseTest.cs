@@ -15,14 +15,14 @@ using CommomTestUtilities.Repositories.Expense;
 using CommomTestUtilities.Request;
 using FluentAssertions;
 
-namespace UseCases.Test.Expenses;
+namespace UseCases.Test.Expenses.Register;
 public class RegisterExpensesUseCaseTest
 {
     public RegisterExpenseUseCase CreateUseCase()
     {
         User user = UserBuilder.Build();
         IMapper mapper = MapperBuilder.Build();
-        IUnitOfWork unitOfWork = UnitOfWorkBuilder.Build(); 
+        IUnitOfWork unitOfWork = UnitOfWorkBuilder.Build();
         IExpenseWriteOnlyRepository repository = ExpenseWriteOnlyRepositoryBuilder.Build();
         ILoggedUser loggedUser = new LoggedUserBuilder().Get(user).Build();
 
@@ -45,7 +45,7 @@ public class RegisterExpensesUseCaseTest
     {
         RegisterExpenseUseCase useCase = CreateUseCase();
         RequestExpenseJson request = RequestRegisterExpenseJsonBuilder.Build();
-        request.Title = String.Empty;
+        request.Title = string.Empty;
 
         var act = async () => await useCase.Execute(request);
 
