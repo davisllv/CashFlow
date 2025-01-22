@@ -11,15 +11,13 @@ using System.Text.Json;
 using WebApi.Test.InlineData;
 
 namespace WebApi.Test.Expenses.Register;
-public class RegisterExpenseTest : IClassFixture<CustomWebApplicationFactory>
+public class RegisterExpenseTest : CashFlowClassFixture
 {
     private const string METHOD = "api/Expenses";
-    private readonly HttpClient _httpClient;
     private readonly string _token;
 
-    public RegisterExpenseTest(CustomWebApplicationFactory webApplicationFactory)
+    public RegisterExpenseTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
-        _httpClient = webApplicationFactory.CreateClient();
         _token = webApplicationFactory.GetToken();
     }
 
@@ -28,8 +26,7 @@ public class RegisterExpenseTest : IClassFixture<CustomWebApplicationFactory>
     {
         RequestExpenseJson request = RequestRegisterExpenseJsonBuilder.Build();
         // Forma de perpassar o authorization
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-        var result = await _httpClient.PostAsJsonAsync(METHOD, request);
+        var result = await DoPost(requestUri: METHOD, request: request, token: _token);
 
         result.StatusCode.Should().Be(HttpStatusCode.Created);
 
@@ -47,11 +44,9 @@ public class RegisterExpenseTest : IClassFixture<CustomWebApplicationFactory>
         RequestExpenseJson request = RequestRegisterExpenseJsonBuilder.Build();
         request.Title = string.Empty;
 
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-
-        _httpClient.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(cultureInfo));
-
-        var result = await _httpClient.PostAsJsonAsync(METHOD, request);
+        // Esses códigos estão muito repetidos, por enquanto em todos os códigos de testes de integração
+        // Criado esse formato, pois a extensão da classe vai fazer essa funcionalidade.
+        var result = await DoPost(requestUri: METHOD, request: request, token: _token, cultureInfo: cultureInfo);
 
         result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
