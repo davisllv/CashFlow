@@ -47,7 +47,7 @@ public class RegisterUserUseCaseTest
     public async Task Sucess()
     {
         RegisterUserUseCase useCase = CreateUseCase();
-        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+        RequestRegisterUserJson request = RequestRegisterUserJsonBuilder.Build();
 
         ResponseRegisterUserJson result = await useCase.Execute(request);
 
@@ -59,7 +59,7 @@ public class RegisterUserUseCaseTest
     public async Task Error_Name_Empty()
     {
         RegisterUserUseCase useCase = CreateUseCase();
-        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+        RequestRegisterUserJson request = RequestRegisterUserJsonBuilder.Build();
         request.Name = string.Empty;
 
         var act = async () => await useCase.Execute(request);
@@ -73,7 +73,7 @@ public class RegisterUserUseCaseTest
     public async Task Error_Email_Empty()
     {
         RegisterUserUseCase useCase = CreateUseCase();
-        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+        RequestRegisterUserJson request = RequestRegisterUserJsonBuilder.Build();
         request.Email = string.Empty;
 
         var act = async () => await useCase.Execute(request);
@@ -84,7 +84,7 @@ public class RegisterUserUseCaseTest
     [Fact]
     public async Task Error_Email_Already_Exists()
     {
-        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+        RequestRegisterUserJson request = RequestRegisterUserJsonBuilder.Build();
         RegisterUserUseCase useCase = CreateUseCase(request.Email);
 
         var act = async () => await useCase.Execute(request);

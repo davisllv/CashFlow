@@ -27,7 +27,7 @@ public class AutoMapping : Profile
     {
         // A origem, Destino
         CreateMap<RequestExpenseJson, Expense>();
-        CreateMap<RequestUserJson, User>()
+        CreateMap<RequestRegisterUserJson, User>()
             .ForMember(dest => dest.Password, config => config.Ignore()); // Forma de ignorar a variável
     }
 }

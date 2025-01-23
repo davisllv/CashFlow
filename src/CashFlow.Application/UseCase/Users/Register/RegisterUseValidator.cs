@@ -2,8 +2,8 @@
 using CashFlow.Exception;
 using FluentValidation;
 
-namespace CashFlow.Application.UseCase.Users;
-public class UserUseValidator : AbstractValidator<RequestUserJson>
+namespace CashFlow.Application.UseCase.Users.Register;
+public class UserUseValidator : AbstractValidator<RequestRegisterUserJson>
 {
     public UserUseValidator()
     {
@@ -14,6 +14,6 @@ public class UserUseValidator : AbstractValidator<RequestUserJson>
             .WithMessage(ResourceErrorMessages.EMAIL_INVALID);
 
         // FOrma de criar uma maneira de reutilizar a validação da senha
-        RuleFor(user => user.Password).SetValidator(new PasswordValidator<RequestUserJson>());
+        RuleFor(user => user.Password).SetValidator(new PasswordValidator<RequestRegisterUserJson>());
     }
 }

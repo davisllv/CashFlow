@@ -9,6 +9,7 @@ using CashFlow.Application.UseCase.Expenses.UpdateExpenseUseCase;
 using CashFlow.Application.UseCase.Login.DoLogin;
 using CashFlow.Application.UseCase.Users.GetProfile;
 using CashFlow.Application.UseCase.Users.Register;
+using CashFlow.Application.UseCase.Users.Update;
 using CashFlow.Application.UseCases.Expenses.Reports.Pdf;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -40,6 +41,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IGenerateExpensesReportPdfUseCase, GenerateExpensesReportPdfUseCase>();
 
         services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
+        services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
 
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
         services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();

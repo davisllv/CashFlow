@@ -30,7 +30,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         _tokenGenerator = tokenGenerator;
     }
 
-    public async Task<ResponseRegisterUserJson> Execute(RequestUserJson request)
+    public async Task<ResponseRegisterUserJson> Execute(RequestRegisterUserJson request)
     {
         await Validate(request);
 
@@ -50,7 +50,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         };
     }
 
-    private async Task Validate(RequestUserJson request)
+    private async Task Validate(RequestRegisterUserJson request)
     {
         ValidationResult validation = new UserUseValidator().Validate(request);
 

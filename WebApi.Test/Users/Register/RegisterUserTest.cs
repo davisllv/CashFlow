@@ -19,7 +19,7 @@ public class RegisterUserTest : CashFlowClassFixture
     [Fact]
     public async Task Sucess()
     {
-        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+        RequestRegisterUserJson request = RequestRegisterUserJsonBuilder.Build();
 
         var result = await DoPost(METHOD, request);
 
@@ -38,7 +38,7 @@ public class RegisterUserTest : CashFlowClassFixture
     [ClassData(typeof(CultureInlineDataTest))] // Forma de fazer com que seja criado uma lista de valores;
     public async Task Error_Empty_Name(string cultureInfo)
     {
-        RequestUserJson request = RequestRegisterUserJsonBuilder.Build();
+        RequestRegisterUserJson request = RequestRegisterUserJsonBuilder.Build();
         request.Name = string.Empty;
 
         var result = await DoPost(requestUri: METHOD, request: request, cultureInfo: cultureInfo);

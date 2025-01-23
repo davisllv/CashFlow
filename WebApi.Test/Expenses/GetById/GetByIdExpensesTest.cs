@@ -30,7 +30,6 @@ public class GetByIdExpensesTest : CashFlowClassFixture
         var body = await result.Content.ReadAsStreamAsync();
 
         var response = await JsonDocument.ParseAsync(body);
-        var id = response.RootElement.GetProperty("id").GetInt64();
         response.RootElement.GetProperty("id").GetInt64().Should().Be(_expenseId);
         response.RootElement.GetProperty("title").GetString().Should().NotBeNullOrWhiteSpace();
         response.RootElement.GetProperty("date").GetDateTime().Should().NotBeAfter(DateTime.Today);

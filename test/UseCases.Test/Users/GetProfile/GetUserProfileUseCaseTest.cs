@@ -9,7 +9,7 @@ using CommomTestUtilities.Mapper;
 using FluentAssertions;
 
 namespace WebApi.Test.Users.GetProfile;
-public class GetUserProfileTest
+public class GetUserProfileUseCaseTest
 {
     public GetUserProfileUseCase CreateUseCase(User user)
     {

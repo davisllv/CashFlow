@@ -49,6 +49,7 @@ public static class DependencyInjectionExtension
 
         services.AddScoped<IUserWriteOnlyRepository, UsersRepository>();
         services.AddScoped<IUserReadOnlyRepository, UsersRepository>();
+        services.AddScoped<IUserUpdateOnlyRepository, UsersRepository>();
     }
 
 

@@ -1,5 +1,7 @@
-﻿using CashFlow.Application.UseCase.Users.GetProfile;
+﻿using CashFlow.Application.UseCase.Expenses.UpdateExpenseUseCase;
+using CashFlow.Application.UseCase.Users.GetProfile;
 using CashFlow.Application.UseCase.Users.Register;
+using CashFlow.Application.UseCase.Users.Update;
 using CashFlow.Communication.Request;
 using CashFlow.Communication.Responses;
 using CashFlow.Communication.Responses.Users;
@@ -17,7 +19,7 @@ public class UsersController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(
         [FromServices] IRegisterUserUseCase _useCase,
-        [FromBody] RequestUserJson request)
+        [FromBody] RequestRegisterUserJson request)
     {
         ResponseRegisterUserJson response = await _useCase.Execute(request);
 
@@ -33,4 +35,16 @@ public class UsersController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpPut]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Update([FromServices] IUpdateUserUseCase useCase, [FromBody] RequestUpdateUserJson request)
+    {
+        await useCase.Execute(request);
+
+        return NoContent();
+    }
+
 }
