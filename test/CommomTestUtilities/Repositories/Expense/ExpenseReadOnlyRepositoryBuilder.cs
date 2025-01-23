@@ -17,5 +17,12 @@ public class ExpenseReadOnlyRepositoryBuilder
         return this;
     }
 
+    public ExpenseReadOnlyRepositoryBuilder GetById(CashFlow.Domain.Entities.User user, CashFlow.Domain.Entities.Expense expense)
+    {
+        _expenseReadOnlyRepositoryMock.Setup(setup => setup.GetById(user, expense.Id)).ReturnsAsync(expense);
+
+        return this;
+    }
+
     public IExpenseReadOnlyRepository Build() => _expenseReadOnlyRepositoryMock.Object;
 }

@@ -12,6 +12,7 @@ namespace WebApi.Test;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     private CashFlow.Domain.Entities.User _user;
+    private CashFlow.Domain.Entities.Expense _expense;
     private string _password;
     private string _token;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -43,6 +44,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     public string GetName() => _user.Name;
     public string GetPassword() => _password;
     public string GetToken() => _token;
+    public long GetExpenseId() => _expense.Id;
 
 
 
@@ -66,6 +68,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     private void AddExpenses(CashFlowDbContext dbContext, User user)
     {
         var expenses = ExpensesBuilder.Build(user);
+        _expense = expenses;
         dbContext.Expenses.Add(expenses);
 
     }
