@@ -4,10 +4,10 @@ using CashFlow.Exception;
 using FluentValidation;
 
 namespace CashFlow.Application.UseCase.Users.Update;
-public class UpdateUseValidator : AbstractValidator<RequestUpdateUserJson>
+public class UpdateUserValidator : AbstractValidator<RequestUpdateUserJson>
 {
 
-    public UpdateUseValidator()
+    public UpdateUserValidator()
     {
         RuleFor(user => user.Name).NotEmpty().WithMessage(ResourceErrorMessages.NAME_EMPTY);
         RuleFor(user => user.Email).NotEmpty().WithMessage(ResourceErrorMessages.EMAIL_EMPTY)

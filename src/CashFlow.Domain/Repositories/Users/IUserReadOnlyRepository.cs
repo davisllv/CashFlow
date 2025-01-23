@@ -5,4 +5,6 @@ public interface IUserReadOnlyRepository
 
     Task<Entities.User?> GetUserByEmail(string email);
 
+    Task<Entities.User> GetById(long id);
+
 }

@@ -29,17 +29,19 @@ public class UpdateUserUseCase : IUpdateUserUseCase
 
         Validate(request, userLogged.Email);
 
-        userLogged.Name = request.Name;
-        userLogged.Email = request.Email;
+        User user = await _userReadOnlyRepository.GetById(userLogged.Id); // Preciso usar esse getBy porque o _logged tem AsNoTrACKING
 
-        _userUpdateOnlyRepository.Update(userLogged);
+        user.Name = request.Name;
+        user.Email = request.Email;
+
+        _userUpdateOnlyRepository.Update(user);
 
         await _unitOfWork.Commit();
     }
 
     private async void Validate(RequestUpdateUserJson request, string currentEmail)
     {
-        var result = new UpdateUseValidator().Validate(request);
+        var result = new UpdateUserValidator().Validate(request);
 
         if (!currentEmail.Equals(request.Email))
         {
