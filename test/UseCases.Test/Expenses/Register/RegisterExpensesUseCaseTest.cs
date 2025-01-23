@@ -9,6 +9,7 @@ using CashFlow.Domain.Services.LoggedUser;
 using CashFlow.Exception;
 using CashFlow.Exception.ExceptionBase;
 using CommomTestUtilities.Entities;
+using CommomTestUtilities.LoggedUser;
 using CommomTestUtilities.Mapper;
 using CommomTestUtilities.Repositories;
 using CommomTestUtilities.Repositories.Expense;
@@ -33,7 +34,7 @@ public class RegisterExpensesUseCaseTest
     public async Task Sucess()
     {
         RegisterExpenseUseCase useCase = CreateUseCase();
-        RequestExpenseJson request = RequestRegisterExpenseJsonBuilder.Build();
+        RequestExpenseJson request = RequestExpenseJsonBuilder.Build();
 
         ResponseRegisterExpenseJson result = await useCase.Execute(request);
 
@@ -44,7 +45,7 @@ public class RegisterExpensesUseCaseTest
     public async Task Error_Title_Empty()
     {
         RegisterExpenseUseCase useCase = CreateUseCase();
-        RequestExpenseJson request = RequestRegisterExpenseJsonBuilder.Build();
+        RequestExpenseJson request = RequestExpenseJsonBuilder.Build();
         request.Title = string.Empty;
 
         var act = async () => await useCase.Execute(request);

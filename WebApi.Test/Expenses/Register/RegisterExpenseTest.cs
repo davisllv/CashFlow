@@ -24,7 +24,7 @@ public class RegisterExpenseTest : CashFlowClassFixture
     [Fact]
     public async Task Sucess()
     {
-        RequestExpenseJson request = RequestRegisterExpenseJsonBuilder.Build();
+        RequestExpenseJson request = RequestExpenseJsonBuilder.Build();
         // Forma de perpassar o authorization
         var result = await DoPost(requestUri: METHOD, request: request, token: _token);
 
@@ -41,7 +41,7 @@ public class RegisterExpenseTest : CashFlowClassFixture
     [ClassData(typeof(CultureInlineDataTest))]
     public async Task Error_Title_Empty(string cultureInfo)
     {
-        RequestExpenseJson request = RequestRegisterExpenseJsonBuilder.Build();
+        RequestExpenseJson request = RequestExpenseJsonBuilder.Build();
         request.Title = string.Empty;
 
         // Esses códigos estão muito repetidos, por enquanto em todos os códigos de testes de integração

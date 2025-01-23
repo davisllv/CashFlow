@@ -24,5 +24,12 @@ public class ExpenseReadOnlyRepositoryBuilder
         return this;
     }
 
+    public ExpenseReadOnlyRepositoryBuilder FilterByMonth(CashFlow.Domain.Entities.User user, List<CashFlow.Domain.Entities.Expense> expenses)
+    {
+        _expenseReadOnlyRepositoryMock.Setup(repository => repository.FilterByMonth(user, It.IsAny<DateOnly>())).ReturnsAsync(expenses);
+
+        return this;
+    }
+
     public IExpenseReadOnlyRepository Build() => _expenseReadOnlyRepositoryMock.Object;
 }

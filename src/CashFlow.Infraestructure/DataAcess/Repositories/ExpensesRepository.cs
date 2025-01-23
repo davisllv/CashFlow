@@ -46,7 +46,7 @@ internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnl
         _dbContext.Expenses.Update(expense); // Update é void porque ele não é async
     }
 
-    public async Task<List<Expense>> FilterByMonth(DateOnly date)
+    public async Task<List<Expense>> FilterByMonth(User user, DateOnly date)
     {
         // Filtros são feitos dentro do repositório.
         var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
@@ -57,7 +57,7 @@ internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnl
         return await _dbContext
             .Expenses
             .AsNoTracking()
-            .Where(expense => expense.Date >= startDate && expense.Date <= finalDate)
+            .Where(expense => expense.Date >= startDate && expense.Date <= finalDate && expense.UserId == user.Id)
             .OrderBy(expense => expense.Date)
             .ThenBy(expense => expense.Title) // Forma de ordenar caso os valores estejam iguai
             .ToListAsync();

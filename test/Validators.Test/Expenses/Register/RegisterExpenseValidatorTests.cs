@@ -14,7 +14,7 @@ public class RegisterExpenseValidatorTests
         // Arrange - Configuração das instâncias dos testes
         var validator = new ExpenseValidator();
 
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         // Act - Validações sendo feita, as ações
 
         var result = validator.Validate(request);
@@ -30,7 +30,7 @@ public class RegisterExpenseValidatorTests
         // Arrange
         var validator = new ExpenseValidator();
 
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Title = string.Empty;
 
         // Act
@@ -48,7 +48,7 @@ public class RegisterExpenseValidatorTests
         // Arrange
         var validator = new ExpenseValidator();
 
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Amount = amount;
 
         // Act
@@ -64,7 +64,7 @@ public class RegisterExpenseValidatorTests
         // Arrange
         var validator = new ExpenseValidator();
 
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Date = DateTime.UtcNow.AddDays(10);
 
         // Act
@@ -80,7 +80,7 @@ public class RegisterExpenseValidatorTests
         // Arrange
         var validator = new ExpenseValidator();
 
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.PaymentType = (PaymentType)10;
 
         // Act

@@ -30,12 +30,10 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
     public async Task<byte[]> Execute(DateOnly month)
     {
         var user = await _loggedUser.Get();
-        var expenses = await _repository.FilterByMonth(month);
+        var expenses = await _repository.FilterByMonth(user, month);
 
         if (expenses.Count == 0)
-        {
             return [];
-        }
 
         var document = CreateDocument(user, month);
         var page = CreatePage(document);

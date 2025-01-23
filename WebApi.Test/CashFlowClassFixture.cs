@@ -10,7 +10,7 @@ public class CashFlowClassFixture : IClassFixture<CustomWebApplicationFactory>
     {
         _httpClient = webApplicationFactory.CreateClient();
     }
-
+    // Não posso colocar diferentes métodos dentro da classe post, por exemplo, porque se não, o framework pode se perder e trazer um resultado diferente, isto é, ele vai chamar um ou outro
     protected async Task<HttpResponseMessage> DoPost(string requestUri, object request, string token = "", string cultureInfo = "en")
     {
         if(!string.IsNullOrWhiteSpace(token))
@@ -28,6 +28,29 @@ public class CashFlowClassFixture : IClassFixture<CustomWebApplicationFactory>
         ChangeRequestCulture(cultureInfo);
 
         return await _httpClient.GetAsync(requestUri);
+    }
+
+    protected async Task<HttpResponseMessage> DoDelete(
+     string requestUri,
+     string token,
+     string culture = "en")
+    {
+        AuthorizeRequest(token);
+        ChangeRequestCulture(culture);
+
+        return await _httpClient.DeleteAsync(requestUri);
+    }
+
+    protected async Task<HttpResponseMessage> DoPut(
+      string requestUri,
+      object request,
+      string token,
+      string culture = "en")
+    {
+        AuthorizeRequest(token);
+        ChangeRequestCulture(culture);
+
+        return await _httpClient.PutAsJsonAsync(requestUri, request);
     }
 
     private void AuthorizeRequest(string token)

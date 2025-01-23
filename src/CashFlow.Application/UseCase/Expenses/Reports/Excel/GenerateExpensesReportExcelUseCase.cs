@@ -22,7 +22,7 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
     public async Task<byte[]> Execute(DateOnly month)
     {
         var user = await _loggedUser.Get();
-        var expenses = await _repository.FilterByMonth(month);
+        var expenses = await _repository.FilterByMonth(user, month);
         // Caso não tenha expenses, não faz sentido retornar o um excel com apenas cabeçalho.
         if (expenses.Count == 0)
             return [];

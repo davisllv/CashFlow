@@ -1,7 +1,7 @@
 ﻿using CashFlow.Domain.Services.LoggedUser;
 using Moq;
 
-namespace CommomTestUtilities.Entities;
+namespace CommomTestUtilities.LoggedUser;
 public class LoggedUserBuilder
 {
     private readonly Mock<ILoggedUser> _loggedUserMock;
