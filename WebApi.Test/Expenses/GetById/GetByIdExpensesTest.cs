@@ -15,8 +15,8 @@ public class GetByIdExpensesTest : CashFlowClassFixture
     private readonly long _expenseId;
     public GetByIdExpensesTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
-        _token = webApplicationFactory.GetToken();
-        _expenseId = webApplicationFactory.GetExpenseId();
+        _token = webApplicationFactory.User_Team_Member.GetToken();
+        _expenseId = webApplicationFactory.Expense.GetExpenseId();
     }
 
     [Fact]
@@ -35,7 +35,7 @@ public class GetByIdExpensesTest : CashFlowClassFixture
         response.RootElement.GetProperty("title").GetString().Should().NotBeNullOrWhiteSpace();
         response.RootElement.GetProperty("date").GetDateTime().Should().NotBeAfter(DateTime.Today);
         response.RootElement.GetProperty("amount").GetDecimal().Should().BeGreaterThan(0);
-        var paymentType = response.RootElement.GetProperty("paymentType").GetInt64();
+        var paymentType = response.RootElement.GetProperty("paymentType").GetInt32();
 
         Enum.IsDefined(typeof(PaymentType), paymentType).Should().BeTrue();
 
