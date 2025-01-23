@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CashFlow.Communication.Request;
 using CashFlow.Communication.Responses.Expenses;
+using CashFlow.Communication.Responses.Users;
 using CashFlow.Domain.Entities;
 
 namespace CashFlow.Application.AutoMapper;
@@ -18,6 +19,7 @@ public class AutoMapping : Profile
         CreateMap<Expense, ResponseRegisterExpenseJson>();
         CreateMap<Expense, ResponseShortExpenseJson>();
         CreateMap<Expense, ResponseExpenseJson>();
+        CreateMap<User, ResponseUserProfileJson>();
 
     }
 
