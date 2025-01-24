@@ -29,7 +29,7 @@ public class UpdateUserUseCase : IUpdateUserUseCase
 
         await Validate(request, userLogged.Email);
 
-        User user = await _userReadOnlyRepository.GetById(userLogged.Id); // Preciso usar esse getBy porque o _logged tem AsNoTrACKING
+        User user = await _userUpdateOnlyRepository.GetById(userLogged.Id); // Preciso usar esse getBy porque o _logged tem AsNoTrACKING
 
         user.Name = request.Name;
         user.Email = request.Email;

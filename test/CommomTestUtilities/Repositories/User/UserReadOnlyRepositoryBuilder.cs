@@ -23,13 +23,5 @@ public class UserReadOnlyRepositoryBuilder
         return this;
     }
 
-    public UserReadOnlyRepositoryBuilder GetById(CashFlow.Domain.Entities.User user)
-    {
-        _repository.Setup(userRepo => userRepo.GetById(user.Id)).ReturnsAsync(user);
-
-        return this;
-    }
-
-
     public IUserReadOnlyRepository Build() => _repository.Object;
 }

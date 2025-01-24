@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using System.Net;
 using System.Text.Json;
-using WebApi.Test.Resources;
 
 namespace WebApi.Test.Users.GetProfile;
 public class GetProfileTest : CashFlowClassFixture

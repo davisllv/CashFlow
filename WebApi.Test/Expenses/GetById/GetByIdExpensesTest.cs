@@ -1,5 +1,4 @@
 ﻿using CashFlow.Communication.Enums;
-using CashFlow.Domain.Entities;
 using CashFlow.Exception;
 using FluentAssertions;
 using System.Globalization;

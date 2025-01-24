@@ -13,7 +13,7 @@ public class UserUseValidator : AbstractValidator<RequestRegisterUserJson>
             .When(user => !string.IsNullOrWhiteSpace(user.Email), ApplyConditionTo.CurrentValidator) // Forma de definir que só vai passar para a segunda validação se não for nulo
             .WithMessage(ResourceErrorMessages.EMAIL_INVALID);
 
-        // FOrma de criar uma maneira de reutilizar a validação da senha
+        // Forma de criar uma maneira de reutilizar a validação da senha
         RuleFor(user => user.Password).SetValidator(new PasswordValidator<RequestRegisterUserJson>());
     }
 }

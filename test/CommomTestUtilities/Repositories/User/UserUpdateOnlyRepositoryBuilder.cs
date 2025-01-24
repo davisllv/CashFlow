@@ -4,9 +4,19 @@ using Moq;
 namespace CommomTestUtilities.Repositories.User;
 public class UserUpdateOnlyRepositoryBuilder
 {
-    public static IUserUpdateOnlyRepository Build()
+    private readonly Mock<IUserUpdateOnlyRepository> _repository;
+    public UserUpdateOnlyRepositoryBuilder()
     {
-        var mock = new Mock<IUserUpdateOnlyRepository>();
-        return mock.Object;
+        _repository = new Mock<IUserUpdateOnlyRepository>();
     }
+
+    public UserUpdateOnlyRepositoryBuilder GetById(CashFlow.Domain.Entities.User user)
+    {
+        _repository.Setup(userRepo => userRepo.GetById(user.Id)).ReturnsAsync(user);
+
+        return this;
+    }
+
+    public IUserUpdateOnlyRepository Build() => _repository.Object;
+
 }

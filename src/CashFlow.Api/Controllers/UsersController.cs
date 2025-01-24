@@ -1,5 +1,4 @@
-﻿using CashFlow.Application.UseCase.Expenses.UpdateExpenseUseCase;
-using CashFlow.Application.UseCase.Users.Delete;
+﻿using CashFlow.Application.UseCase.Users.Delete;
 using CashFlow.Application.UseCase.Users.GetProfile;
 using CashFlow.Application.UseCase.Users.Register;
 using CashFlow.Application.UseCase.Users.Update;

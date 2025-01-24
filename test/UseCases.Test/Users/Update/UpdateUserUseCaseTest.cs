@@ -12,7 +12,6 @@ using CommomTestUtilities.Repositories;
 using CommomTestUtilities.Repositories.User;
 using CommomTestUtilities.Request;
 using FluentAssertions;
-using PdfSharp.Drawing;
 
 namespace UseCases.Test.Users.Update;
 public class UpdateUserUseCaseTest
