@@ -54,7 +54,7 @@ public class UpdateUserValidatorTest
     {
         var validator = new UpdateUserValidator();
         var request = RequestUpdateUserJsonBuilder.Build();
-        request.Email = "welisson.com";
+        request.Email = "davi.com";
 
         var result = validator.Validate(request);
 

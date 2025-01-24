@@ -27,7 +27,7 @@ public class UpdateUserUseCase : IUpdateUserUseCase
     {
         User userLogged = await _loggedUser.Get();
 
-        Validate(request, userLogged.Email);
+        await Validate(request, userLogged.Email);
 
         User user = await _userReadOnlyRepository.GetById(userLogged.Id); // Preciso usar esse getBy porque o _logged tem AsNoTrACKING
 
@@ -39,7 +39,7 @@ public class UpdateUserUseCase : IUpdateUserUseCase
         await _unitOfWork.Commit();
     }
 
-    private async void Validate(RequestUpdateUserJson request, string currentEmail)
+    private async Task Validate(RequestUpdateUserJson request, string currentEmail)
     {
         var result = new UpdateUserValidator().Validate(request);
 
