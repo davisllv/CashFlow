@@ -1,4 +1,5 @@
 ﻿using CashFlow.Application.UseCase.Expenses.UpdateExpenseUseCase;
+using CashFlow.Application.UseCase.Users.Delete;
 using CashFlow.Application.UseCase.Users.GetProfile;
 using CashFlow.Application.UseCase.Users.Register;
 using CashFlow.Application.UseCase.Users.Update;
@@ -47,4 +48,13 @@ public class UsersController : ControllerBase
         return NoContent();
     }
 
+    [HttpDelete]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> Delete([FromServices] IDeleteUserUseCase useCase)
+    {
+        await useCase.Execute();
+
+        return NoContent();
+    }
 }

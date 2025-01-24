@@ -39,4 +39,11 @@ internal class UsersRepository : IUserWriteOnlyRepository, IUserReadOnlyReposito
     {
         _dbContext.Update(user);
     }
+
+    public async Task Delete(long id)
+    {
+        var response = await _dbContext.Users.FirstAsync(user => user.Id == id);
+
+        _dbContext.Users.Remove(response);
+    }
 }
