@@ -11,5 +11,6 @@ public class Expense
     public PaymentType PaymentType { get; set; }
     public long UserId { get; set; }
     public User User { get; set; } = default!; // Definir que o valor não será nulo;
+    public ICollection<Tag> Tags { get; set; } = []; // Porque a Despesa vai estar vinculada a mais de uma Tag - N:N
 
 }
