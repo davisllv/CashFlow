@@ -32,13 +32,16 @@ internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnl
 
     async Task<Expense?> IExpenseReadOnlyRepository.GetById(User user, long id)
     {
-        return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id && user.Id == expense.UserId);
+        return await GetFullExpense()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(expense => expense.Id == id && user.Id == expense.UserId);
     }
 
     // Essa é uma forma de diferenciar quais os métodos estão sendo chamados de acordo com a interface
     async Task<Expense?> IExpenseUpdateOnlyRepository.GetById(User user, long id)
     {
-        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
+        return await GetFullExpense()
+            .FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
     }
 
     public void Update(Expense expense)
@@ -61,5 +64,14 @@ internal class ExpensesRepository : IExpenseReadOnlyRepository, IExpenseWriteOnl
             .OrderBy(expense => expense.Date)
             .ThenBy(expense => expense.Title) // Forma de ordenar caso os valores estejam iguai
             .ToListAsync();
+    }
+
+    private Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Expense, ICollection<Tag>> GetFullExpense()
+    {
+        return _dbContext.Expenses
+            .Include(expense => expense.Tags);
+            //.ThenInclude(tag => tag.Expense) - Forma de dar mais includes
+            //.Include(Expense => Expense.Tags).ThenInclude(Tag => Tag.user) - Para dar mais includes ainda.
+        
     }
 }
