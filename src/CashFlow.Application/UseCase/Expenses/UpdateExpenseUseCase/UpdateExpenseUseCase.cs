@@ -33,6 +33,9 @@ public class UpdateExpenseUseCase : IUpdateExpenseUseCase
         if (expense is null)
             throw new NotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);
 
+        // Forma de remover todas as tags e já ficar com as da request, para evitar comparações do que existe e o que não existe. Proprio do C# para remover.
+        expense.Tags.Clear();
+
         _mapper.Map(request, expense);
 
 
