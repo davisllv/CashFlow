@@ -26,8 +26,14 @@ public class AutoMapping : Profile
     private void RequestToEntity()
     {
         // A origem, Destino
-        CreateMap<RequestExpenseJson, Expense>();
         CreateMap<RequestRegisterUserJson, User>()
             .ForMember(dest => dest.Password, config => config.Ignore()); // Forma de ignorar a variável
+
+        CreateMap<RequestExpenseJson, Expense>()
+            .ForMember(dest => dest.Tags, config => config.MapFrom(source => source.Tags.Distinct()));
+
+
+        CreateMap<Communication.Enums.Tag, Tag>()
+            .ForMember(dest => dest.Value, config => config.MapFrom(source => source)); // Forma de fazer o mapeamento dos valores.
     }
 }
