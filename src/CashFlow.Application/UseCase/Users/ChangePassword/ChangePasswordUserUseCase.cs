@@ -31,7 +31,7 @@ public class ChangePasswordUserUseCase : IChangePasswordUserUseCase
         Validate(request, loggedUser);
 
         User user = await _userUpdateOnlyRepository.GetById(loggedUser.Id); // Esse não tem
-        user.Password = _passwordEncripter.Encrypt(request.Password);
+        user.Password = _passwordEncripter.Encrypt(request.NewPassword);
 
 
         _userUpdateOnlyRepository.Update(user);

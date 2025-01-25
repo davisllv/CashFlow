@@ -1,4 +1,5 @@
-﻿using CashFlow.Application.UseCase.Users.Delete;
+﻿using CashFlow.Application.UseCase.Users.ChangePassword;
+using CashFlow.Application.UseCase.Users.Delete;
 using CashFlow.Application.UseCase.Users.GetProfile;
 using CashFlow.Application.UseCase.Users.Register;
 using CashFlow.Application.UseCase.Users.Update;
@@ -53,6 +54,19 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Delete([FromServices] IDeleteUserUseCase useCase)
     {
         await useCase.Execute();
+
+        return NoContent();
+    }
+
+    [HttpPut("change-password")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ChangePassword(
+        [FromServices] IChangePasswordUserUseCase useCase,
+        [FromBody] RequestChangePasswordJson request)
+    {
+        await useCase.Execute(request);
 
         return NoContent();
     }

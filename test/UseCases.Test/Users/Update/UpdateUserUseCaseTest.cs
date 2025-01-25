@@ -18,8 +18,8 @@ public class UpdateUserUseCaseTest
 {
     private UpdateUserUseCase CreateUseCase(User user, string? email = null)
     {
-        IUserUpdateOnlyRepository userUpdateOnlyRepository = UserUpdateOnlyRepositoryBuilder.Build();
-        UserReadOnlyRepositoryBuilder userReadOnlyRepository = new UserReadOnlyRepositoryBuilder().GetById(user);
+        IUserUpdateOnlyRepository userUpdateOnlyRepository = new UserUpdateOnlyRepositoryBuilder().GetById(user).Build();
+        UserReadOnlyRepositoryBuilder userReadOnlyRepository = new UserReadOnlyRepositoryBuilder();
 
         if(!string.IsNullOrWhiteSpace(email))
             userReadOnlyRepository.ExistActiveUserWithEmail(email);

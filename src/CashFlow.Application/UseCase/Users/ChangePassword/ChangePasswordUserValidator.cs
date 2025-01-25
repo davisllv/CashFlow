@@ -6,6 +6,6 @@ public class ChangePasswordUserValidator : AbstractValidator<RequestChangePasswo
 {
     public ChangePasswordUserValidator()
     {
-        RuleFor(user => user.Password).SetValidator(new PasswordValidator<RequestChangePasswordJson>());
+        RuleFor(user => user.NewPassword).SetValidator(new PasswordValidator<RequestChangePasswordJson>());
     }
 }
