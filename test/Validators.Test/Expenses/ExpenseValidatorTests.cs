@@ -4,9 +4,9 @@ using CashFlow.Exception;
 using CommomTestUtilities.Request;
 using FluentAssertions;
 
-namespace Validators.Test.Expenses.Register;
+namespace Validators.Test.Expenses;
 
-public class RegisterExpenseValidatorTests
+public class ExpenseValidatorTests
 {
     [Fact] // Forma de definir que a função será um test
     public void Sucess()
@@ -89,5 +89,22 @@ public class RegisterExpenseValidatorTests
         // Assert
         result.IsValid.Should().BeFalse();
         result.Errors.Should().ContainSingle().And.Contain(e => e.ErrorMessage.Equals(ResourceErrorMessages.PAYMENT_TYPE_INVALID));
+    }
+
+    [Fact]
+    public void Error_Tag_Invalid()
+    {
+        // Arrange
+        var validator = new ExpenseValidator();
+
+        var request = RequestExpenseJsonBuilder.Build();
+        request.Tags.Add((Tag)10);
+
+        // Act
+        var result = validator.Validate(request);
+
+        // Assert
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().ContainSingle().And.Contain(e => e.ErrorMessage.Equals(ResourceErrorMessages.TAG_TYPE_NOT_SUPORTED));
     }
 }

@@ -34,5 +34,9 @@ public class GetExpenseByIdUseCaseTest
         response.Should().NotBeNull();
         response.Id.Should().Be(expense.Id);
         response.Title.Should().Be(expense.Title);
+        response.Description.Should().Be(expense.Description);
+        response.Amount.Should().Be(expense.Amount);
+        response.PaymentType.Should().Be((CashFlow.Communication.Enums.PaymentType)expense.PaymentType);
+        response.Tags.Should().NotBeNullOrEmpty().And.BeEquivalentTo(expense.Tags.Select(tag=> tag.Value));
     }
 }
