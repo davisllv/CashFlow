@@ -128,7 +128,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
 
         var assembly = Assembly.GetExecutingAssembly();
         var directoryName = Path.GetDirectoryName(assembly.Location);
-        var pathFile = Path.Combine(directoryName!, "Logo", "ProfilePhoto.png");
+        var pathFile = Path.Combine(directoryName!, "Logo", "ProfilePhoto.jpeg");
 
         row.Cells[0].AddImage(pathFile);
 
