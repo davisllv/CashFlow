@@ -15,6 +15,7 @@ using CommomTestUtilities.Repositories.User;
 using CommomTestUtilities.Request;
 using CommomTestUtilities.Token;
 using FluentAssertions;
+using Shouldly;
 
 namespace UseCases.Test.Users.Register;
 public class RegisterUserUseCaseTest
@@ -50,6 +51,14 @@ public class RegisterUserUseCaseTest
         RequestRegisterUserJson request = RequestRegisterUserJsonBuilder.Build();
 
         ResponseRegisterUserJson result = await useCase.Execute(request);
+
+        // Shouldly
+
+        result.ShouldNotBeNull();
+        result.Token.ShouldNotBeNull();
+        result.Name.ShouldBe(request.Name);
+
+        // Fluentassertions
 
         result.Should().NotBeNull();
         result.Name.Should().Be(request.Name);
